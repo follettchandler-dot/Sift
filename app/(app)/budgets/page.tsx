@@ -127,7 +127,7 @@ export default function BudgetsPage() {
             <form onSubmit={handleCreate} className="space-y-4 mt-2">
               <div className="space-y-1.5">
                 <Label htmlFor="category">Category</Label>
-                <Select value={categoryId} onValueChange={setCategoryId}>
+                <Select value={categoryId} onValueChange={(v) => setCategoryId(v ?? "")}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
@@ -223,7 +223,11 @@ export default function BudgetsPage() {
       ) : budgets.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {budgets.map((budget) => (
-            <BudgetCard key={budget.id} budget={budget} onDelete={handleDelete} />
+            <BudgetCard
+                key={budget.id}
+                budget={{ ...budget, category: budget.category ?? null }}
+                onDelete={handleDelete}
+              />
           ))}
         </div>
       ) : (

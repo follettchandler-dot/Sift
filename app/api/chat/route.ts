@@ -61,8 +61,8 @@ export async function POST(req: NextRequest) {
         const date = r.transaction_date ?? "unknown date"
         const total = r.total != null ? `$${r.total.toFixed(2)}` : "unknown total"
         const items = r.receipt_items
-          ?.map((i: { description: string | null; total_price: number | null; category: { name: string } | null }) => {
-            const cat = i.category?.name ?? "uncategorized"
+          ?.map((i) => {
+            const cat = (Array.isArray(i.category) ? i.category[0]?.name : (i.category as { name: string } | null)?.name) ?? "uncategorized"
             const price = i.total_price != null ? `$${i.total_price.toFixed(2)}` : ""
             return `    - ${i.description ?? "item"} (${cat})${price ? ` ${price}` : ""}`
           })
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
   const budgetSummary =
     budgets
       ?.map((b) => {
-        const cat = (b.category as { name: string } | null)?.name ?? "Unknown"
+        const cat = (Array.isArray(b.category) ? b.category[0]?.name : (b.category as unknown as { name: string } | null)?.name) ?? "Unknown"
         return `- ${cat}: $${b.amount_limit}/month (alert at ${b.alert_threshold_pct}%)`
       })
       .join("\n") ?? "No budgets set."
