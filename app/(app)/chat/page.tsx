@@ -7,7 +7,10 @@ import { SendHorizonal, Bot, Loader2 } from "lucide-react"
 import { ChatMessage } from "@/components/chat-message"
 import { Button } from "@/components/ui/button"
 
-const transport = new DefaultChatTransport({ api: "/api/chat" })
+const transport = new DefaultChatTransport({
+  api: "/api/chat",
+  requestInit: { credentials: "same-origin" },
+})
 
 const SUGGESTIONS = [
   "How much did I spend this month?",

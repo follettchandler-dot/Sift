@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
+  const messages = body.messages ?? body.uiMessages ?? []
 
   // Fetch last 100 receipts with items + categories
   const { data: receipts } = await supabase
@@ -97,7 +98,7 @@ Be concise, specific, and helpful. Reference actual data from the receipts when 
   const result = streamText({
     model: google("gemini-2.5-flash"),
     system: systemPrompt,
-    messages: body.messages,
+    messages,
   })
 
   return result.toUIMessageStreamResponse()
