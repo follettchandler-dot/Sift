@@ -1,4 +1,5 @@
 import { generateText, Output } from "ai";
+import { google } from "@ai-sdk/google";
 import { z } from "zod";
 
 const receiptSchema = z.object({
@@ -21,7 +22,7 @@ export type ParsedReceipt = z.infer<typeof receiptSchema>;
 
 export async function parseReceiptText(ocrText: string): Promise<ParsedReceipt> {
   const { output } = await generateText({
-    model: "anthropic/claude-sonnet-4.5",
+    model: google("gemini-2.5-flash"),
     output: Output.object({ schema: receiptSchema }),
     prompt: `Extract structured data from this receipt text. Parse every line item with its name, quantity, and price. If quantity is not specified, assume 1. Ensure total_amount matches the receipt total.\n\nReceipt text:\n${ocrText}`,
   });

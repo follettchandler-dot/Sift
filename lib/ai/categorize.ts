@@ -1,4 +1,5 @@
 import { generateText, Output } from "ai";
+import { google } from "@ai-sdk/google";
 import { z } from "zod";
 
 const categorizationSchema = z.object({
@@ -42,7 +43,7 @@ export async function categorizeItems(
     .join("\n");
 
   const { output } = await generateText({
-    model: "anthropic/claude-sonnet-4.5",
+    model: google("gemini-2.5-flash"),
     output: Output.object({ schema: categorizationSchema }),
     prompt: `Categorize each receipt item into the most specific matching category. Also assign an IRS Schedule C tax category if the item could be a business expense (null if clearly personal).\n\nAvailable categories:\n${categoryText}\n\nItems to categorize (from ${items[0]?.merchant_name || "unknown merchant"}):\n${items.map((i) => `- ${i.name}`).join("\n")}`,
   });

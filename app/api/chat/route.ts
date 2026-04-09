@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { streamText } from "ai"
+import { google } from "@ai-sdk/google"
 import { startOfMonth, startOfWeek } from "date-fns"
 
 export async function POST(req: NextRequest) {
@@ -94,7 +95,7 @@ ${budgetSummary}
 Be concise, specific, and helpful. Reference actual data from the receipts when answering. Format currency as USD. If the user asks about spending in a specific category or time period, calculate from the receipt data above.`
 
   const result = streamText({
-    model: "anthropic/claude-sonnet-4.5",
+    model: google("gemini-2.5-flash"),
     system: systemPrompt,
     messages: body.messages,
   })
