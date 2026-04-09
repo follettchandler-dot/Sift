@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import { streamText } from "ai"
+import { streamText, type UIMessage } from "ai"
 import { google } from "@ai-sdk/google"
 import { startOfMonth, startOfWeek } from "date-fns"
+
+// Convert UI messages (parts format) to model messages (content format)
+function toModelMessages(uiMessages: UIMessage[]) {
+  return uiMessages.map((m) => ({
+    role: m.role as "user" | "assistant",
+    content:
+      m.parts
+        ?.filter((p) => p.type === "text")
+        .map((p) => (p as { type: "text"; text: string }).text)
+        .join("") ?? "",
+  }))
+}
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -15,7 +27,8 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
-  const messages = body.messages ?? body.uiMessages ?? []
+  const rawMessages = body.messages ?? body.uiMessages ?? []
+  const messages = rawMessages[0]?.parts ? toModelMessages(rawMessages) : rawMessages
 
   // Fetch last 100 receipts with items + categories
   const { data: receipts } = await supabase
