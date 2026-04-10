@@ -1214,28 +1214,48 @@ export default function HomePage() {
             {[
               {
                 heading: "Product",
-                links: ["Features", "API", "Pricing", "Changelog", "Integrations"],
+                links: [
+                  { label: "Features", href: "#features" },
+                  { label: "API", href: "#" },
+                  { label: "Pricing", href: "#pricing" },
+                  { label: "Changelog", href: "#" },
+                  { label: "Integrations", href: "#" },
+                ],
               },
               {
                 heading: "Company",
-                links: ["About", "Careers", "Contact", "Blog"],
+                links: [
+                  { label: "About", href: "#" },
+                  { label: "Careers", href: "#" },
+                  { label: "Contact", href: "#" },
+                  { label: "Blog", href: "#" },
+                ],
               },
               {
                 heading: "Resources",
-                links: ["Documentation", "Guides", "Security", "Status"],
+                links: [
+                  { label: "Documentation", href: "#" },
+                  { label: "Guides", href: "#" },
+                  { label: "Security", href: "#" },
+                  { label: "Status", href: "#" },
+                ],
               },
               {
                 heading: "Legal",
-                links: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+                links: [
+                  { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Terms of Service", href: "/terms" },
+                  { label: "Cookie Policy", href: "#" },
+                ],
               },
             ].map((col) => (
               <div key={col.heading}>
                 <p className="text-stone-400 text-xs uppercase tracking-[0.2em] mb-4 font-medium">{col.heading}</p>
                 <ul className="space-y-3">
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <Link href="#" className="text-stone-500 text-sm hover:text-white transition-colors">
-                        {link}
+                  {col.links.map((item) => (
+                    <li key={item.label}>
+                      <Link href={item.href} className="text-stone-500 text-sm hover:text-white transition-colors">
+                        {item.label}
                       </Link>
                     </li>
                   ))}
