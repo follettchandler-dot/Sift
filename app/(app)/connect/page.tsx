@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Mail, ShoppingCart, Building2, Apple, CreditCard, CheckCircle2, RefreshCw, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
+import { usePlaidLink } from "react-plaid-link";
 
 interface ConnectedAccount {
   id: string;
@@ -13,11 +14,94 @@ interface ConnectedAccount {
   metadata: { last_synced_at?: string } | null;
 }
 
+interface PlaidItemStatus {
+  id: string;
+  institution_name: string | null;
+  last_synced_at: string | null;
+  account_count: number;
+}
+
+function PlaidLinkButton({
+  onSuccess,
+}: {
+  onSuccess: () => void;
+}) {
+  const [linkToken, setLinkToken] = useState<string | null>(null);
+  const [fetchingToken, setFetchingToken] = useState(false);
+
+  const fetchLinkToken = useCallback(async () => {
+    setFetchingToken(true);
+    try {
+      const res = await fetch("/api/plaid/create-link-token", { method: "POST" });
+      if (!res.ok) throw new Error("Failed to get link token");
+      const data = await res.json();
+      setLinkToken(data.link_token);
+    } catch {
+      toast.error("Failed to initialize bank connection. Please try again.");
+    } finally {
+      setFetchingToken(false);
+    }
+  }, []);
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken ?? "",
+    onSuccess: async (public_token) => {
+      try {
+        const res = await fetch("/api/plaid/exchange-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ public_token }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Exchange failed");
+        toast.success(
+          `Connected ${data.institution_name ?? "bank"} — ${data.account_count} account${data.account_count !== 1 ? "s" : ""} linked.`
+        );
+        onSuccess();
+      } catch {
+        toast.error("Failed to link bank account. Please try again.");
+      }
+    },
+    onExit: () => {
+      setLinkToken(null);
+    },
+  });
+
+  // Auto-open once we have a token
+  useEffect(() => {
+    if (linkToken && ready) {
+      open();
+    }
+  }, [linkToken, ready, open]);
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="w-full"
+      onClick={fetchLinkToken}
+      disabled={fetchingToken}
+    >
+      {fetchingToken ? (
+        <>
+          <Loader2 className="mr-2 size-3 animate-spin" />
+          Connecting...
+        </>
+      ) : (
+        "Connect Bank"
+      )}
+    </Button>
+  );
+}
+
 export default function ConnectPage() {
   const searchParams = useSearchParams();
   const [gmailAccount, setGmailAccount] = useState<ConnectedAccount | null>(null);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [plaidItems, setPlaidItems] = useState<PlaidItemStatus[]>([]);
+  const [loadingPlaid, setLoadingPlaid] = useState(true);
+  const [syncingPlaid, setSyncingPlaid] = useState(false);
 
   // Show toast for OAuth redirects
   useEffect(() => {
@@ -49,6 +133,50 @@ export default function ConnectPage() {
     }
     fetchStatus();
   }, []);
+
+  const fetchPlaidStatus = useCallback(async () => {
+    try {
+      const res = await fetch("/api/plaid/status");
+      if (res.ok) {
+        const data = await res.json();
+        setPlaidItems(data.items ?? []);
+      }
+    } catch {
+      // Non-fatal
+    } finally {
+      setLoadingPlaid(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchPlaidStatus();
+  }, [fetchPlaidStatus]);
+
+  async function handlePlaidSyncNow() {
+    setSyncingPlaid(true);
+    try {
+      const res = await fetch("/api/plaid/sync", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Sync failed");
+      } else {
+        const { added, modified, removed } = data;
+        const total = added + modified + removed;
+        if (total === 0) {
+          toast.success("Already up to date — no new transactions.");
+        } else {
+          toast.success(
+            `Synced: ${added} new, ${modified} updated, ${removed} removed.`
+          );
+        }
+        await fetchPlaidStatus();
+      }
+    } catch {
+      toast.error("Sync failed. Please try again.");
+    } finally {
+      setSyncingPlaid(false);
+    }
+  }
 
   async function handleSyncNow() {
     setSyncing(true);
@@ -210,23 +338,73 @@ export default function ConnectPage() {
           </CardContent>
         </Card>
 
-        {/* Bank Account */}
+        {/* Bank Account — Plaid */}
         <Card>
           <CardHeader className="flex-row items-center gap-3 pb-2">
             <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
               <Building2 className="size-5 text-emerald-400" />
             </div>
-            <div>
+            <div className="flex items-center gap-2">
               <CardTitle className="text-sm">Bank Account</CardTitle>
+              {!loadingPlaid && plaidItems.length > 0 && (
+                <CheckCircle2 className="size-4 text-emerald-400" />
+              )}
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
             <CardDescription>
-              Connect via Plaid to match transactions with your receipts automatically.
+              Connect via Plaid to automatically track bank and credit card transactions.
             </CardDescription>
-            <Button variant="outline" size="sm" disabled className="w-full">
-              Coming soon
-            </Button>
+            {!loadingPlaid && plaidItems.length > 0 && (
+              <div className="space-y-1">
+                {plaidItems.map((item) => (
+                  <div key={item.id} className="text-xs text-zinc-400">
+                    <span className="font-medium text-zinc-300">
+                      {item.institution_name ?? "Bank"}
+                    </span>
+                    {" · "}
+                    {item.account_count} account{item.account_count !== 1 ? "s" : ""}
+                    {item.last_synced_at && (
+                      <span className="text-zinc-500">
+                        {" · "}Last synced:{" "}
+                        {new Date(item.last_synced_at).toLocaleString()}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            {loadingPlaid ? (
+              <Button variant="outline" size="sm" disabled className="w-full">
+                <Loader2 className="mr-2 size-3 animate-spin" />
+                Loading...
+              </Button>
+            ) : plaidItems.length > 0 ? (
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={handlePlaidSyncNow}
+                  disabled={syncingPlaid}
+                >
+                  {syncingPlaid ? (
+                    <>
+                      <Loader2 className="mr-2 size-3 animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="mr-2 size-3" />
+                      Sync Now
+                    </>
+                  )}
+                </Button>
+                <PlaidLinkButton onSuccess={fetchPlaidStatus} />
+              </div>
+            ) : (
+              <PlaidLinkButton onSuccess={fetchPlaidStatus} />
+            )}
           </CardContent>
         </Card>
 
