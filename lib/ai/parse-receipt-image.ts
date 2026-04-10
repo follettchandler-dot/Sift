@@ -14,6 +14,9 @@ const receiptSchema = z.object({
       quantity: z.number().default(1).describe("Quantity purchased"),
       unit_price: z.number().describe("Price per unit"),
       total_price: z.number().describe("Total price for this line item"),
+      category_slug: z.string().describe("The slug of the most specific matching category from the list provided"),
+      tax_category_slug: z.string().nullable().describe("IRS Schedule C tax category slug if business expense, null for personal items"),
+      confidence: z.number().min(0).max(1).describe("Confidence score for the categorization"),
     })
   ),
 });
@@ -21,10 +24,18 @@ const receiptSchema = z.object({
 export type ParsedReceipt = z.infer<typeof receiptSchema>;
 
 /**
- * Parse a receipt image directly using Gemini's vision capabilities.
- * This replaces the OCR + text parsing pipeline with a single multimodal call.
+ * Parse and categorize a receipt image in one Gemini Vision call.
+ * Returns structured receipt data with pre-categorized items.
  */
-export async function parseReceiptImage(imageBuffer: Buffer, mimeType: string): Promise<ParsedReceipt> {
+export async function parseReceiptImage(
+  imageBuffer: Buffer,
+  mimeType: string,
+  categoryList: { slug: string; name: string; parent_name: string | null }[]
+): Promise<ParsedReceipt> {
+  const categoryText = categoryList
+    .map((c) => `${c.slug}: ${c.parent_name ? c.parent_name + " > " : ""}${c.name}`)
+    .join("\n");
+
   const { output } = await generateText({
     model: google("gemini-2.5-flash"),
     output: Output.object({ schema: receiptSchema }),
@@ -34,7 +45,20 @@ export async function parseReceiptImage(imageBuffer: Buffer, mimeType: string): 
         content: [
           {
             type: "text",
-            text: "Extract structured data from this receipt image. Parse every line item with its name, quantity, and price. If quantity is not specified, assume 1. Identify the merchant name, transaction date (YYYY-MM-DD format), total amount, tax amount, and tip amount if present. Be thorough — capture every item on the receipt.",
+            text: `Extract structured data from this receipt image AND categorize each item.
+
+For each line item, identify:
+- Item name, quantity (assume 1 if not specified), unit price, total price
+- The best matching category_slug from the list below
+- tax_category_slug if it's a business expense, or null for personal items
+- confidence score (0-1) for the categorization
+
+Also identify: merchant name, transaction date (YYYY-MM-DD), total amount, tax amount, tip amount.
+
+Available categories:
+${categoryText}
+
+Be thorough — capture every item on the receipt.`,
           },
           {
             type: "image",
