@@ -24,8 +24,38 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Itemized — Know where every dollar actually goes",
-  description: "Itemized breaks down your purchases item by item. Not just '$150 at Walmart' — but $80 groceries, $40 office supplies, $30 toys. Finally see your real spending.",
+  metadataBase: new URL("https://itemized.io"),
+  title: {
+    default: "Itemized — Know where every dollar actually goes",
+    template: "%s · Itemized",
+  },
+  description:
+    "Itemized breaks down your purchases item by item. Not just '$150 at Walmart' — but $80 groceries, $40 office supplies, $30 toys. Finally see your real spending.",
+  keywords: [
+    "itemized receipts",
+    "spending tracker",
+    "expense management",
+    "receipt scanner",
+    "AI finance app",
+    "budget tracker",
+    "item-level spending",
+  ],
+  authors: [{ name: "Itemized" }],
+  creator: "Itemized",
+  openGraph: {
+    type: "website",
+    url: "https://itemized.io",
+    title: "Itemized — Know where every dollar actually goes",
+    description:
+      "Your bank shows charges. We show items. AI-powered receipt intelligence that breaks down every purchase into categorized line items.",
+    siteName: "Itemized",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Itemized — Know where every dollar actually goes",
+    description:
+      "Your bank shows charges. We show items. AI-powered receipt intelligence.",
+  },
 };
 
 export default function RootLayout({
