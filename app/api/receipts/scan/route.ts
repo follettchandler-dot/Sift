@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUser, getAuthenticatedSupabase } from "@/lib/supabase/auth";
-import { extractTextFromImage } from "@/lib/ocr";
-import { parseReceiptText } from "@/lib/ai/parse-receipt";
+import { parseReceiptImage } from "@/lib/ai/parse-receipt-image";
 import { categorizeItems } from "@/lib/ai/categorize";
 
 export async function POST(req: NextRequest) {
@@ -18,19 +17,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No receipt file provided" }, { status: 400 });
   }
 
-  // Convert file to buffer for OCR
+  // Convert file to buffer
   const arrayBuffer = await file.arrayBuffer();
   const imageBuffer = Buffer.from(arrayBuffer);
+  const mimeType = file.type || "image/jpeg";
 
-  // Step 1: OCR
-  const ocrText = await extractTextFromImage(imageBuffer);
-
-  if (!ocrText) {
-    return NextResponse.json({ error: "Could not extract text from image" }, { status: 422 });
+  // Parse receipt image directly with Gemini Vision (one-shot OCR + structured extraction)
+  let parsed;
+  try {
+    parsed = await parseReceiptImage(imageBuffer, mimeType);
+  } catch (err) {
+    console.error("Receipt parse failed:", err);
+    return NextResponse.json({ error: "Could not parse receipt image" }, { status: 422 });
   }
-
-  // Step 2: AI parse receipt
-  const parsed = await parseReceiptText(ocrText);
 
   // Step 3: Fetch categories from DB
   const { data: categories } = await supabase
@@ -85,7 +84,6 @@ export async function POST(req: NextRequest) {
       processing_status: "complete",
       receipt_image_url: receiptImageUrl,
       metadata: {
-        ocr_text: ocrText,
         tax_amount: parsed.tax_amount,
         tip_amount: parsed.tip_amount,
       },
