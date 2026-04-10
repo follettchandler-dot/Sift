@@ -47,7 +47,7 @@ export default function LoginPage() {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">Welcome back</CardTitle>
-        <CardDescription>Sign in to your Sift account</CardDescription>
+        <CardDescription>Sign in to your Itemized account</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

@@ -52,9 +52,9 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1">
           <div className="flex size-7 items-center justify-center rounded-md bg-emerald-500 text-black font-bold text-sm">
-            S
+            I
           </div>
-          <span className="font-semibold text-sm">Sift</span>
+          <span className="font-semibold text-sm">itemized</span>
         </div>
       </SidebarHeader>
 

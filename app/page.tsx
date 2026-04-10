@@ -46,7 +46,7 @@ function ReceiptDemo() {
 
       {/* The breakdown card */}
       <div className="bg-stone-900 text-white rounded-2xl shadow-2xl p-5 max-w-[260px] absolute -right-4 -bottom-6 rotate-[2deg] z-20 border border-stone-700">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-stone-400 mb-3">Sift Breakdown</p>
+        <p className="text-[10px] uppercase tracking-[0.2em] text-stone-400 mb-3">Itemized Breakdown</p>
         <div className="flex gap-0.5 h-3 rounded-full overflow-hidden mb-4">
           {categories.map((c) => (
             <div key={c.name} className={`${c.color} opacity-90`} style={{ width: `${c.pct}%` }} />
@@ -89,9 +89,9 @@ export default function HomePage() {
       <nav className="relative z-40 flex items-center justify-between px-6 md:px-12 py-5 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-9 h-9 rounded-xl bg-stone-900 flex items-center justify-center text-white font-bold text-sm tracking-tight group-hover:bg-amber-500 transition-colors duration-300">
-            S
+            I
           </div>
-          <span className="font-bold text-xl tracking-tight">sift</span>
+          <span className="font-bold text-xl tracking-tight">itemized</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link
@@ -126,7 +126,7 @@ export default function HomePage() {
             </h1>
             <p className="text-stone-500 text-lg md:text-xl leading-relaxed max-w-lg mb-10">
               Every bank app says &ldquo;Walmart &mdash; $52.39.&rdquo;
-              Sift tells you it was $19 in groceries, $17 in office supplies,
+              Itemized tells you it was $19 in groceries, $17 in office supplies,
               $10 in household goods, and $6 in toys.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -171,7 +171,7 @@ export default function HomePage() {
             {
               num: "01",
               title: "Snap or connect",
-              desc: "Photograph a receipt, connect your email, or link retailer accounts. Sift ingests receipts from everywhere.",
+              desc: "Photograph a receipt, connect your email, or link retailer accounts. Itemized ingests receipts from everywhere.",
             },
             {
               num: "02",
@@ -251,7 +251,7 @@ export default function HomePage() {
               Know what your team<br />is actually buying
             </h2>
             <p className="text-stone-500 leading-relaxed max-w-lg">
-              Your field team spent $14,000 at gas stations last quarter. Was it fuel? Sift shows you $4,200 was snacks and energy drinks. Per-employee, per-item expense intelligence.
+              Your field team spent $14,000 at gas stations last quarter. Was it fuel? Itemized shows you $4,200 was snacks and energy drinks. Per-employee, per-item expense intelligence.
             </p>
           </div>
           <div className="shrink-0">
@@ -342,7 +342,7 @@ export default function HomePage() {
           <h2 className="font-[var(--font-serif)] text-4xl md:text-5xl tracking-tight mb-4">
             Your bank hides the details.
             <br />
-            <span className="italic text-amber-600">Sift reveals them.</span>
+            <span className="italic text-amber-600">Itemized reveals them.</span>
           </h2>
           <p className="text-stone-500 text-lg max-w-lg mx-auto mb-8">
             Start seeing where your money actually goes, item by item.
@@ -361,10 +361,10 @@ export default function HomePage() {
       <footer className="relative z-10 border-t border-stone-200 px-6 md:px-12 py-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-400">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-stone-900 flex items-center justify-center text-white font-bold text-xs">S</div>
-            <span className="font-medium text-stone-600">sift</span>
+            <div className="w-7 h-7 rounded-lg bg-stone-900 flex items-center justify-center text-white font-bold text-xs">I</div>
+            <span className="font-medium text-stone-600">itemized</span>
           </div>
-          <p>&copy; {new Date().getFullYear()} Sift. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Itemized. All rights reserved.</p>
         </div>
       </footer>
     </div>

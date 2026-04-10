@@ -50,7 +50,7 @@ export default function SignupPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Create your Sift account</CardTitle>
+        <CardTitle className="text-lg">Create your Itemized account</CardTitle>
         <CardDescription>
           Start tracking your spending at the item level
         </CardDescription>

@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
       {
         user_id: user.id,
         provider: "gmail",
-        provider_account_id: user.id, // use Sift user id as stable key
+        provider_account_id: user.id, // use Itemized user id as stable key
         access_token: tokens.access_token,
         refresh_token: tokens.refresh_token,
         token_expires_at: tokens.expiry_date

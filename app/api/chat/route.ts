@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
       })
       .join("\n") ?? "No budgets set."
 
-  const systemPrompt = `You are Sift, an AI spending assistant. You help users understand their spending, find patterns, and make smarter financial decisions.
+  const systemPrompt = `You are Itemized, an AI spending assistant. You help users understand their spending, find patterns, and make smarter financial decisions.
 
 Today's date: ${now.toISOString().split("T")[0]}
 Current month start: ${monthStart.toISOString().split("T")[0]}

@@ -24,8 +24,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Sift — Know where every dollar actually goes",
-  description: "Sift breaks down your purchases item by item. Not just '$150 at Walmart' — but $80 groceries, $40 office supplies, $30 toys. Finally see your real spending.",
+  title: "Itemized — Know where every dollar actually goes",
+  description: "Itemized breaks down your purchases item by item. Not just '$150 at Walmart' — but $80 groceries, $40 office supplies, $30 toys. Finally see your real spending.",
 };
 
 export default function RootLayout({
