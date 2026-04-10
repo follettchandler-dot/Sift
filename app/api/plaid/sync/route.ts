@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { plaid } from "@/lib/plaid";
 import { getAuthenticatedUser, getAuthenticatedSupabase } from "@/lib/supabase/auth";
+import { matchTransactionsToReceipts } from "@/lib/match-transactions";
 
 export async function POST(req: Request) {
   const user = await getAuthenticatedUser(req);
@@ -152,9 +153,13 @@ export async function POST(req: Request) {
     }
   }
 
+  // Auto-match new transactions to existing receipts
+  const { matched } = await matchTransactionsToReceipts(supabase, user.id);
+
   return NextResponse.json({
     added: totalAdded,
     modified: totalModified,
     removed: totalRemoved,
+    matched,
   });
 }

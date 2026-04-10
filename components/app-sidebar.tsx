@@ -11,6 +11,7 @@ import {
   Link2,
   Settings,
   LogOut,
+  ArrowRightLeft,
 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import {
@@ -31,6 +32,7 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Chat", href: "/chat", icon: MessageSquare },
   { label: "Receipts", href: "/receipts", icon: Receipt },
+  { label: "Transactions", href: "/transactions", icon: ArrowRightLeft },
   { label: "Scan", href: "/scan", icon: Camera },
   { label: "Budgets", href: "/budgets", icon: Wallet },
   { label: "Connect", href: "/connect", icon: Link2 },

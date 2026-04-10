@@ -1,9 +1,10 @@
-import { DollarSign, Receipt, ShoppingCart } from "lucide-react"
+import { DollarSign, Receipt, ShoppingCart, ArrowRightLeft, AlertCircle } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ReceiptCard } from "@/components/receipt-card"
 import { SpendingDonut, SpendingBarChart } from "@/components/spending-chart"
-import { startOfMonth, subMonths, format } from "date-fns"
+import { CategoryBadge } from "@/components/category-badge"
+import { startOfMonth, subMonths, format, subDays } from "date-fns"
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", {
@@ -14,6 +15,17 @@ function formatCurrency(value: number) {
   }).format(value)
 }
 
+function formatCurrencyFull(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value)
+}
+
+function formatShortDate(dateStr: string) {
+  return format(new Date(dateStr), "MMM d")
+}
+
 export default async function DashboardPage() {
   const supabase = await createClient()
   const {
@@ -22,6 +34,7 @@ export default async function DashboardPage() {
 
   const now = new Date()
   const monthStart = startOfMonth(now).toISOString()
+  const thirtyDaysAgo = subDays(now, 30).toISOString()
 
   // Current month receipts with items + categories
   const { data: receipts } = await supabase
@@ -39,10 +52,41 @@ export default async function DashboardPage() {
     .gte("transaction_date", monthStart)
     .order("transaction_date", { ascending: false })
 
+  // Transactions from current month
+  const { data: transactions } = await supabase
+    .from("transactions")
+    .select("id, merchant_name, merchant_logo_url, amount, iso_currency_code, date, pending, payment_channel, receipt_id")
+    .eq("user_id", user!.id)
+    .gte("date", monthStart)
+    .order("date", { ascending: false })
+
+  // Recent activity: transactions from last 30 days with receipt join
+  const { data: recentTransactions } = await supabase
+    .from("transactions")
+    .select(`
+      id, merchant_name, merchant_logo_url, amount, iso_currency_code, date, pending, receipt_id,
+      receipt:receipts(id, merchant_name, total, receipt_items(id, description, total_price, category:categories(name, slug)))
+    `)
+    .eq("user_id", user!.id)
+    .gte("date", thirtyDaysAgo)
+    .order("date", { ascending: false })
+    .limit(10)
+
   // Stats
-  const totalSpent = receipts?.reduce((sum, r) => sum + (r.total ?? 0), 0) ?? 0
+  // Matched transactions already counted in receipts — avoid double count
+  const matchedTxIds = new Set(
+    (transactions || []).filter((t) => t.receipt_id).map((t) => t.receipt_id)
+  )
+  const receiptTotal = receipts?.reduce((sum, r) => sum + (r.total ?? 0), 0) ?? 0
+  const unmatchedTxTotal = (transactions || [])
+    .filter((t) => !t.receipt_id)
+    .reduce((sum, t) => sum + Math.abs(Number(t.amount ?? 0)), 0)
+  const totalSpent = receiptTotal + unmatchedTxTotal
+
   const receiptCount = receipts?.length ?? 0
   const itemCount = receipts?.reduce((sum, r) => sum + (r.receipt_items?.length ?? 0), 0) ?? 0
+  const txCount = transactions?.length ?? 0
+  const untrackedCount = (transactions || []).filter((t) => !t.receipt_id).length
 
   // Category totals from items
   const categoryMap = new Map<string, { name: string; amount: number }>()
@@ -88,9 +132,6 @@ export default async function DashboardPage() {
     })
   )
 
-  // Recent receipts (last 5)
-  const recentReceipts = receipts?.slice(0, 5) ?? []
-
   const stats = [
     {
       label: "Total Spent",
@@ -113,6 +154,20 @@ export default async function DashboardPage() {
       color: "text-purple-400",
       bg: "bg-purple-500/10",
     },
+    {
+      label: "Transactions",
+      value: txCount.toString(),
+      icon: ArrowRightLeft,
+      color: "text-amber-400",
+      bg: "bg-amber-500/10",
+    },
+    {
+      label: "Untracked",
+      value: untrackedCount.toString(),
+      icon: AlertCircle,
+      color: "text-rose-400",
+      bg: "bg-rose-500/10",
+    },
   ]
 
   return (
@@ -125,7 +180,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((stat) => (
           <Card key={stat.label}>
             <CardHeader className="flex-row items-center justify-between gap-4 pb-2">
@@ -164,14 +219,86 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
-      {/* Recent Receipts */}
+      {/* Recent Activity */}
       <div>
-        <h2 className="mb-3 font-semibold">Recent Receipts</h2>
-        {recentReceipts.length > 0 ? (
+        <h2 className="mb-3 font-semibold">Recent Activity</h2>
+        {recentTransactions && recentTransactions.length > 0 ? (
           <div className="flex flex-col gap-3">
-            {recentReceipts.map((receipt) => (
-              <ReceiptCard key={receipt.id} receipt={receipt} />
-            ))}
+            {recentTransactions.map((tx) => {
+              type ReceiptWithItems = {
+                id: string
+                merchant_name: string | null
+                total: number | null
+                receipt_items: Array<{
+                  id: string
+                  description: string | null
+                  total_price: number | null
+                  category: { name: string; slug: string } | null
+                }>
+              }
+              const receiptRaw = tx.receipt as unknown
+              const receipt = (Array.isArray(receiptRaw) ? receiptRaw[0] ?? null : receiptRaw) as ReceiptWithItems | null
+
+              const categories = receipt
+                ? receipt.receipt_items
+                    .reduce(
+                      (acc: { name: string; slug: string }[], item) => {
+                        if (item.category && !acc.find((c) => c.slug === item.category!.slug)) {
+                          acc.push(item.category)
+                        }
+                        return acc
+                      },
+                      []
+                    )
+                    .slice(0, 3)
+                : []
+
+              const amount = Math.abs(Number(tx.amount ?? 0))
+              const logoLetter = (tx.merchant_name ?? "?")[0].toUpperCase()
+
+              return (
+                <Card key={tx.id}>
+                  <CardHeader className="flex-row items-start justify-between gap-4 pb-2">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {tx.merchant_logo_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={tx.merchant_logo_url}
+                          alt={tx.merchant_name ?? ""}
+                          className="size-9 rounded-lg object-contain bg-white p-1 shrink-0"
+                        />
+                      ) : (
+                        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-300 font-semibold text-sm">
+                          {logoLetter}
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="font-medium truncate">
+                          {tx.merchant_name || "Unknown Merchant"}
+                        </p>
+                        <p className="text-xs text-zinc-500 mt-0.5">
+                          {tx.date ? formatShortDate(tx.date) : "—"}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="font-semibold tabular-nums shrink-0">
+                      {formatCurrencyFull(amount)}
+                    </span>
+                  </CardHeader>
+                  <CardContent className="flex flex-wrap items-center gap-2 pt-0">
+                    {receipt && categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <CategoryBadge key={cat.slug} name={cat.name} slug={cat.slug} />
+                      ))
+                    ) : (
+                      <span className="text-xs text-zinc-500 italic">
+                        Untracked — no itemized data
+                      </span>
+                    )}
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
@@ -179,8 +306,8 @@ export default async function DashboardPage() {
               <Receipt className="size-7" />
             </div>
             <div>
-              <p className="font-medium text-zinc-300">No receipts this month</p>
-              <p className="text-sm text-zinc-500 mt-1">Scan a receipt to get started</p>
+              <p className="font-medium text-zinc-300">No activity in the last 30 days</p>
+              <p className="text-sm text-zinc-500 mt-1">Connect a bank or scan a receipt to get started</p>
             </div>
           </div>
         )}

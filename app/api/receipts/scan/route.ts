@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUser, getAuthenticatedSupabase } from "@/lib/supabase/auth";
 import { parseReceiptImage } from "@/lib/ai/parse-receipt-image";
+import { matchTransactionsToReceipts } from "@/lib/match-transactions";
 
 export async function POST(req: NextRequest) {
   const user = await getAuthenticatedUser(req);
@@ -113,6 +114,9 @@ export async function POST(req: NextRequest) {
     if (itemsError) {
       return NextResponse.json({ error: "Failed to create receipt items" }, { status: 500 });
     }
+
+    // Try to link this new receipt to any pending unmatched transactions
+    await matchTransactionsToReceipts(supabase, user.id).catch(() => {});
 
     return NextResponse.json({ ...receipt, items: items || [] });
   } catch (err) {
