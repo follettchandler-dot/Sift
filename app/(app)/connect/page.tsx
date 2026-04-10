@@ -380,11 +380,11 @@ export default function ConnectPage() {
                 Loading...
               </Button>
             ) : plaidItems.length > 0 ? (
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1"
+                  className="w-full"
                   onClick={handlePlaidSyncNow}
                   disabled={syncingPlaid}
                 >
