@@ -41,7 +41,6 @@
     cursor: none;
   }
 
-  /* Custom cursor */
   .cursor {
     position: fixed;
     width: 12px;
@@ -54,7 +53,6 @@
     mix-blend-mode: difference;
   }
 
-  /* Slide container */
   .deck {
     display: flex;
     transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
@@ -72,7 +70,6 @@
     overflow: hidden;
   }
 
-  /* Slide counter */
   .slide-num {
     position: absolute;
     bottom: 40px;
@@ -82,10 +79,8 @@
     color: var(--stone-400);
     letter-spacing: 0.1em;
   }
-
   .slide-num .current { color: var(--stone-900); font-weight: 600; }
 
-  /* Logo watermark */
   .logo-mark {
     position: absolute;
     top: 40px;
@@ -103,7 +98,6 @@
   }
   .logo-mark span { font-weight: 600; font-size: 16px; letter-spacing: -0.02em; }
 
-  /* Typography */
   .serif { font-family: 'DM Serif Display', serif; }
   .mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -121,15 +115,10 @@
   .accent { color: var(--amber-600); }
   .italic { font-style: italic; }
 
-  /* Data grid */
-  .data-grid {
-    display: grid;
-    gap: 0;
-  }
+  .data-grid { display: grid; gap: 0; }
   .data-cell {
     padding: 28px 32px;
     border: 1px solid var(--stone-200);
-    border-collapse: collapse;
   }
   .data-cell .value {
     font-family: 'JetBrains Mono', monospace;
@@ -143,7 +132,101 @@
     color: var(--stone-500);
   }
 
-  /* Comparison table */
+  .slide.dark {
+    background: var(--stone-900);
+    color: white;
+  }
+  .slide.dark .label { color: var(--stone-500); }
+  .slide.dark .logo-mark .mark { background: var(--amber-500); color: var(--stone-900); }
+  .slide.dark .logo-mark span { color: white; }
+  .slide.dark .slide-num { color: var(--stone-600); }
+  .slide.dark .slide-num .current { color: var(--stone-400); }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .nav-hint {
+    position: fixed;
+    bottom: 40px;
+    left: 80px;
+    font-size: 11px;
+    color: var(--stone-400);
+    z-index: 50;
+    letter-spacing: 0.05em;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    border: 1px solid var(--stone-200);
+    border-radius: 16px;
+    padding: 32px;
+    background: white;
+  }
+  .arch-layer {
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .arch-layer.sources { background: var(--stone-100); }
+  .arch-layer.engine { background: var(--stone-900); color: white; }
+  .arch-layer.api { background: #fef3c7; }
+  .arch-layer.consumers { background: var(--stone-100); }
+  .arch-layer .layer-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--stone-500);
+    margin-bottom: 8px;
+  }
+  .arch-layer.engine .layer-label { color: var(--stone-400); }
+  .arch-layer.api .layer-label { color: var(--amber-600); }
+  .arch-layer .layer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .arch-pill {
+    background: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: var(--stone-700);
+    border: 1px solid var(--stone-200);
+  }
+  .arch-layer.engine .arch-pill {
+    background: var(--stone-800);
+    color: white;
+    border-color: var(--stone-700);
+  }
+  .arch-layer.api .arch-pill {
+    background: var(--amber-100);
+    border-color: var(--amber-300);
+    color: var(--amber-800);
+    background: #fef9c3;
+    border-color: #fde68a;
+    color: #92400e;
+  }
+  .arch-arrow {
+    text-align: center;
+    color: var(--stone-300);
+    font-size: 16px;
+    margin: 4px 0;
+  }
+
+  /* Comparison */
   .comp-table {
     width: 100%;
     border-collapse: collapse;
@@ -164,240 +247,79 @@
     border-bottom: 1px solid var(--stone-100);
     color: var(--stone-700);
   }
-  .comp-table tr:last-child {
-    background: var(--stone-900);
-    color: white;
-    border-radius: 8px;
-  }
-  .comp-table tr:last-child td {
-    border-bottom: none;
-    color: white;
-    font-weight: 500;
-  }
+  .comp-table tr:last-child { background: var(--stone-900); color: white; }
+  .comp-table tr:last-child td { border-bottom: none; color: white; font-weight: 500; }
   .comp-table .check { color: var(--amber-500); font-weight: 700; }
   .comp-table .x { color: var(--stone-300); }
 
-  /* Revenue bars */
-  .rev-bar-group { margin-top: 20px; }
-  .rev-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-  .rev-bar-label {
-    width: 120px;
-    text-align: right;
-    font-size: 13px;
-    color: var(--stone-500);
-  }
-  .rev-bar-track {
-    flex: 1;
-    height: 36px;
-    background: var(--stone-100);
-    border-radius: 4px;
-    position: relative;
-    overflow: hidden;
-  }
-  .rev-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    padding-left: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    color: white;
-    transition: width 1s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-
-  /* Pricing cards */
-  .pricing-row {
-    display: flex;
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     margin-top: 32px;
   }
-  .price-card {
-    flex: 1;
-    border: 1px solid var(--stone-200);
-    border-radius: 16px;
-    padding: 32px;
-    position: relative;
+  .stat-card {
+    border-left: 2px solid var(--stone-200);
+    padding-left: 20px;
   }
-  .price-card.featured {
-    background: var(--stone-900);
-    color: white;
-    border-color: var(--stone-900);
-  }
-  .price-card .tier { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .price-card .amount {
+  .stat-card .num {
     font-family: 'DM Serif Display', serif;
     font-size: 40px;
+    line-height: 1;
+    margin-bottom: 8px;
   }
-  .price-card .amount span { font-family: 'Outfit'; font-size: 16px; color: var(--stone-400); }
-  .price-card ul { list-style: none; margin-top: 20px; }
-  .price-card ul li {
-    font-size: 13px;
-    padding: 6px 0;
+  .stat-card .desc {
+    font-size: 12px;
     color: var(--stone-500);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    line-height: 1.4;
   }
-  .price-card.featured ul li { color: var(--stone-300); }
-  .price-card ul li::before {
-    content: '';
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--stone-400);
-    flex-shrink: 0;
-  }
-  .price-card.featured ul li::before { background: var(--amber-400); }
 
-  /* Dark slides */
-  .slide.dark {
+  /* Code block */
+  .code {
     background: var(--stone-900);
-    color: white;
+    color: #d4d4d8;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
   }
-  .slide.dark .label { color: var(--stone-500); }
-  .slide.dark .logo-mark .mark { background: var(--amber-500); color: var(--stone-900); }
-  .slide.dark .logo-mark span { color: white; }
-  .slide.dark .slide-num { color: var(--stone-600); }
-  .slide.dark .slide-num .current { color: var(--stone-400); }
+  .code .key { color: var(--amber-400); }
+  .code .str { color: var(--lime); }
+  .code .comment { color: var(--stone-500); }
 
-  /* Grain */
-  .grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.025;
-    z-index: 100;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  }
-
-  /* Navigation hint */
-  .nav-hint {
-    position: fixed;
-    bottom: 40px;
-    left: 80px;
-    font-size: 11px;
-    color: var(--stone-400);
-    z-index: 50;
-    letter-spacing: 0.05em;
-  }
-
-  /* Timeline */
-  .timeline {
-    display: flex;
+  /* Roadmap */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     margin-top: 32px;
   }
-  .timeline-item {
-    flex: 1;
+  .roadmap-step {
     padding: 24px;
     border-left: 2px solid var(--stone-200);
     position: relative;
   }
-  .timeline-item::before {
+  .roadmap-step::before {
     content: '';
     position: absolute;
-    left: -5px;
+    left: -7px;
     top: 24px;
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--amber-500);
   }
-  .timeline-item .period {
+  .roadmap-step .period {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--amber-600);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     letter-spacing: 0.05em;
   }
-  .timeline-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-  .timeline-item p { font-size: 13px; color: var(--stone-500); line-height: 1.5; }
-
-  /* Two column */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-
-  /* Receipt visual */
-  .receipt-visual {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 24px 48px rgba(0,0,0,0.08);
-    border: 1px solid var(--stone-200);
-    max-width: 340px;
-  }
-  .receipt-header {
-    text-align: center;
-    padding-bottom: 16px;
-    border-bottom: 2px dashed var(--stone-200);
-    margin-bottom: 16px;
-  }
-  .receipt-header .store { font-weight: 700; font-size: 18px; }
-  .receipt-header .meta { font-size: 11px; color: var(--stone-400); margin-top: 4px; }
-  .receipt-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    font-size: 14px;
-  }
-  .receipt-row .item-name {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .receipt-row .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .receipt-row .price {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    font-size: 13px;
-  }
-  .receipt-total {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 12px;
-    margin-top: 12px;
-    border-top: 2px dashed var(--stone-200);
-    font-weight: 700;
-  }
-  .receipt-total .price {
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* Ask section */
-  .ask-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-top: 40px;
-  }
-  .ask-item {
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 28px;
-  }
-  .ask-item .amount {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--amber-400);
-    margin-bottom: 4px;
-  }
-  .ask-item .use { font-size: 13px; color: var(--stone-400); }
+  .roadmap-step h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .roadmap-step p { font-size: 12px; color: var(--stone-500); line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -414,544 +336,543 @@
       <div style="width: 72px; height: 72px; background: var(--stone-900); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
         <span style="color: white; font-weight: 700; font-size: 32px;">S</span>
       </div>
-      <h1 style="font-size: 72px; letter-spacing: -0.03em; line-height: 0.95;">
-        Your bank shows charges.<br>
-        <span class="accent italic">We show items.</span>
+      <h1 style="font-size: 64px; letter-spacing: -0.03em; line-height: 0.95;">
+        The infrastructure layer for<br>
+        <span class="accent italic">itemized purchase data</span>
       </h1>
-      <p style="margin-top: 24px; font-size: 20px; color: var(--stone-500); max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-        The first AI platform that breaks down every purchase into individual items, automatically categorized.
+      <p style="margin-top: 24px; font-size: 20px; color: var(--stone-500); max-width: 620px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+        Plaid built the pipe for bank account data. Sift is building the pipe for what you actually bought.
       </p>
     </div>
-    <div class="slide-num"><span class="current">01</span> / 15</div>
+    <div class="slide-num"><span class="current">01</span> / 14</div>
   </div>
 
   <!-- SLIDE 2: The Problem -->
   <div class="slide">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
     <div class="label">The Problem</div>
-    <h1 style="font-size: 48px; max-width: 700px; line-height: 1.1; letter-spacing: -0.02em;">
-      $10.5 trillion in consumer spending is invisible at the item level
+    <h1 style="font-size: 48px; max-width: 760px; line-height: 1.1; letter-spacing: -0.02em;">
+      $10.5 trillion in spending is locked at the merchant level
     </h1>
-    <p style="margin-top: 20px; font-size: 18px; color: var(--stone-500); max-width: 560px; line-height: 1.6;">
-      Every financial tool — banks, Mint, Expensify, Ramp — shows merchant-level data. "Walmart $152.39." Nobody knows that's $82 groceries, $41 office supplies, and $29 toys.
+    <p style="margin-top: 20px; font-size: 18px; color: var(--stone-500); max-width: 620px; line-height: 1.6;">
+      Every bank, every fintech, every expense tool shows the same thing: "Walmart $152.39." The item-level data exists &mdash; in POS systems, card networks, retailer databases &mdash; but no one has built the infrastructure to unlock it.
     </p>
-    <div class="data-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 48px; max-width: 700px;">
-      <div class="data-cell">
-        <div class="value">0</div>
-        <div class="desc">Companies doing cross-merchant item-level categorization</div>
+    <div class="stats-row" style="max-width: 900px;">
+      <div class="stat-card">
+        <div class="num">$10.5T</div>
+        <div class="desc">US consumer spending invisible at item level</div>
       </div>
-      <div class="data-cell">
-        <div class="value">258M</div>
-        <div class="desc">US adults with bank accounts who can't see item-level spending</div>
+      <div class="stat-card">
+        <div class="num">0</div>
+        <div class="desc">Companies offering item-level data as infrastructure</div>
       </div>
-      <div class="data-cell">
-        <div class="value">6.1M</div>
-        <div class="desc">US businesses that can't see what employees actually buy</div>
+      <div class="stat-card">
+        <div class="num">147</div>
+        <div class="desc">Categories Sift can identify with 94% accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">$7.3B</div>
+        <div class="desc">Alternative data market growing at 40% CAGR</div>
       </div>
     </div>
-    <div class="slide-num"><span class="current">02</span> / 15</div>
+    <div class="slide-num"><span class="current">02</span> / 14</div>
   </div>
 
-  <!-- SLIDE 3: The Solution (Visual) -->
+  <!-- SLIDE 3: The Insight -->
+  <div class="slide dark">
+    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
+    <div class="label">The Insight</div>
+    <h1 style="font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; max-width: 800px;">
+      We don&rsquo;t compete<br>
+      with Mint or Monarch.<br>
+      <span class="accent italic">We power them.</span>
+    </h1>
+    <p style="margin-top: 24px; font-size: 18px; color: var(--stone-400); max-width: 620px; line-height: 1.6;">
+      Plaid didn&rsquo;t build a Venmo competitor &mdash; they built the pipe Venmo runs on. Stripe didn&rsquo;t build a Shopify competitor &mdash; they built the pipe Shopify runs on. Sift becomes the pipe that every personal finance app, expense tool, and bank uses to add item-level data to their product.
+    </p>
+    <div style="margin-top: 40px; padding: 24px; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; max-width: 700px;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--amber-400); margin-bottom: 12px;">The category-defining shift</div>
+      <p style="font-size: 16px; color: var(--stone-300); line-height: 1.6;">
+        Sift is to itemized purchase data what Plaid is to bank data. Once we&rsquo;re integrated into 50+ fintechs, switching costs become enormous and we become unkillable infrastructure.
+      </p>
+    </div>
+    <div class="slide-num"><span class="current">03</span> / 14</div>
+  </div>
+
+  <!-- SLIDE 4: Architecture -->
   <div class="slide">
+    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
+    <div class="label">The Architecture</div>
+    <h1 style="font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 32px; max-width: 700px;">
+      Three pillars: <span class="italic">ingest, process, expose</span>
+    </h1>
+    <div class="arch-diagram" style="max-width: 900px;">
+      <div class="arch-layer sources">
+        <div class="layer-label">1 &middot; Ingest &mdash; Data Sources</div>
+        <div class="layer-content">
+          <div class="arch-pill">Email parsing</div>
+          <div class="arch-pill">Retailer APIs</div>
+          <div class="arch-pill">Photo OCR</div>
+          <div class="arch-pill">Plaid bank data</div>
+          <div class="arch-pill">POS partnerships</div>
+          <div class="arch-pill">Sift Card (future)</div>
+        </div>
+      </div>
+      <div class="arch-arrow">&darr;</div>
+      <div class="arch-layer engine">
+        <div class="layer-label">2 &middot; Process &mdash; AI Intelligence Engine</div>
+        <div class="layer-content">
+          <div class="arch-pill">Item extraction</div>
+          <div class="arch-pill">147 categories</div>
+          <div class="arch-pill">94% accuracy</div>
+          <div class="arch-pill">Cross-merchant taxonomy</div>
+          <div class="arch-pill">User correction flywheel</div>
+        </div>
+      </div>
+      <div class="arch-arrow">&darr;</div>
+      <div class="arch-layer api">
+        <div class="layer-label">3 &middot; Expose &mdash; Developer API</div>
+        <div class="layer-content">
+          <div class="arch-pill">REST API</div>
+          <div class="arch-pill">Webhooks</div>
+          <div class="arch-pill">JS / Python SDKs</div>
+          <div class="arch-pill">Real-time events</div>
+          <div class="arch-pill">$0.02 per receipt</div>
+        </div>
+      </div>
+      <div class="arch-arrow">&darr;</div>
+      <div class="arch-layer consumers">
+        <div class="layer-label">4 &middot; Customers &mdash; Apps That Integrate Sift</div>
+        <div class="layer-content">
+          <div class="arch-pill">Personal finance apps</div>
+          <div class="arch-pill">Expense tools</div>
+          <div class="arch-pill">Banks &amp; credit unions</div>
+          <div class="arch-pill">Tax software</div>
+          <div class="arch-pill">CPG &amp; retail brands</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num"><span class="current">04</span> / 14</div>
+  </div>
+
+  <!-- SLIDE 5: API Code Example -->
+  <div class="slide dark">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
     <div class="two-col">
       <div>
-        <div class="label">The Solution</div>
+        <div class="label">The Product</div>
         <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em;">
-          AI that reads every receipt and categorizes every item
+          Item-level data in<br>
+          <span class="accent italic">one API call</span>
         </h1>
-        <p style="margin-top: 20px; font-size: 16px; color: var(--stone-500); line-height: 1.6;">
-          Snap a photo, connect your email, or link your retailer accounts. Sift extracts every line item and categorizes it automatically with 94% accuracy.
+        <p style="margin-top: 20px; font-size: 16px; color: var(--stone-400); line-height: 1.6;">
+          Five lines of code. Any developer, any fintech, any bank can integrate item-level purchase intelligence in minutes. No POS partnerships needed. No machine learning expertise required.
         </p>
         <div style="margin-top: 32px; display: flex; gap: 32px;">
           <div>
-            <div class="mono" style="font-size: 28px; font-weight: 600;">94%</div>
-            <div style="font-size: 12px; color: var(--stone-400);">categorization accuracy</div>
+            <div class="mono" style="font-size: 24px; font-weight: 600; color: white;">5 min</div>
+            <div style="font-size: 12px; color: var(--stone-500);">to integrate</div>
           </div>
           <div>
-            <div class="mono" style="font-size: 28px; font-weight: 600;">&lt;3s</div>
-            <div style="font-size: 12px; color: var(--stone-400);">to process a receipt</div>
+            <div class="mono" style="font-size: 24px; font-weight: 600; color: white;">$0.02</div>
+            <div style="font-size: 12px; color: var(--stone-500);">per receipt</div>
           </div>
           <div>
-            <div class="mono" style="font-size: 28px; font-weight: 600;">147</div>
-            <div style="font-size: 12px; color: var(--stone-400);">item categories</div>
+            <div class="mono" style="font-size: 24px; font-weight: 600; color: white;">94%</div>
+            <div style="font-size: 12px; color: var(--stone-500);">accuracy</div>
           </div>
         </div>
       </div>
-      <div style="display: flex; justify-content: center;">
-        <div class="receipt-visual" style="transform: rotate(-1deg);">
-          <div class="receipt-header">
-            <div class="store">WALMART</div>
-            <div class="meta">Supercenter #4218 &middot; Apr 7, 2026</div>
-          </div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: var(--lime)"></span>Organic Bananas</span><span class="price">$2.49</span></div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: var(--rose)"></span>Chicken Breast 2lb</span><span class="price">$11.98</span></div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: var(--sky)"></span>Printer Paper 500ct</span><span class="price">$8.99</span></div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: #fbbf24"></span>Clorox Wipes x2</span><span class="price">$9.98</span></div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: var(--violet)"></span>Hot Wheels 5-Pack</span><span class="price">$6.49</span></div>
-          <div class="receipt-row"><span class="item-name"><span class="dot" style="background: var(--lime)"></span>Greek Yogurt x3</span><span class="price">$4.47</span></div>
-          <div class="receipt-total"><span>Total</span><span class="price">$52.39</span></div>
+      <div>
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--stone-500); margin-bottom: 12px;">POST api.sift.app/v1/parse</div>
+        <div class="code">
+<span class="comment">// Send any receipt text or image</span>
+const response = <span class="key">await</span> fetch(<span class="str">'api.sift.app/v1/parse'</span>, {
+  method: <span class="str">'POST'</span>,
+  headers: {
+    <span class="str">'Authorization'</span>: <span class="str">'Bearer sk_live_xxx'</span>,
+  },
+  body: JSON.stringify({ text: receiptText })
+})
+
+<span class="comment">// Get back fully categorized data</span>
+{
+  <span class="key">"merchant"</span>: <span class="str">"Walmart"</span>,
+  <span class="key">"total"</span>: 52.39,
+  <span class="key">"items"</span>: [
+    { <span class="key">"name"</span>: <span class="str">"Organic Bananas"</span>,
+      <span class="key">"price"</span>: 2.49,
+      <span class="key">"category"</span>: <span class="str">"Groceries &gt; Produce"</span> },
+    { <span class="key">"name"</span>: <span class="str">"Printer Paper"</span>,
+      <span class="key">"price"</span>: 8.99,
+      <span class="key">"category"</span>: <span class="str">"Office &gt; Supplies"</span> }
+  ]
+}
         </div>
       </div>
     </div>
-    <div class="slide-num"><span class="current">03</span> / 15</div>
+    <div class="slide-num"><span class="current">05</span> / 14</div>
   </div>
 
-  <!-- SLIDE 4: Three Revenue Streams -->
-  <div class="slide dark">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Revenue Model</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em;">
-      Three revenue streams<br>from <span class="accent italic">one AI engine</span>
-    </h1>
-    <div class="data-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 48px; gap: 24px;">
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px;">
-        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--lime); margin-bottom: 16px;">Consumer SaaS</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: white;">$6.6M</div>
-        <div style="font-size: 13px; color: var(--stone-400); margin-top: 4px;">ARR at 50K paid users</div>
-        <p style="font-size: 13px; color: var(--stone-500); margin-top: 16px; line-height: 1.5;">
-          Freemium personal spending intelligence. Free tier drives adoption, paid tiers ($8-15/mo) unlock AI chat, budgets, and tax categorization.
-        </p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px;">
-        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sky); margin-bottom: 16px;">Enterprise</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: white;">$18M</div>
-        <div style="font-size: 13px; color: var(--stone-400); margin-top: 4px;">ARR at 500 companies</div>
-        <p style="font-size: 13px; color: var(--stone-500); margin-top: 16px; line-height: 1.5;">
-          Item-level employee expense intelligence. "Your field team spent $14K at gas stations — $4,200 was snacks." $25-50/seat/month.
-        </p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px;">
-        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--amber-400); margin-bottom: 16px;">Data Licensing</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: white;">$5M</div>
-        <div style="font-size: 13px; color: var(--stone-400); margin-top: 4px;">ARR at 10 licensees</div>
-        <p style="font-size: 13px; color: var(--stone-500); margin-top: 16px; line-height: 1.5;">
-          Anonymized, aggregated item-level purchase trends sold to CPG brands, retailers, market research firms, and hedge funds.
-        </p>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">04</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 5: Market Size -->
+  <!-- SLIDE 6: Customer Types -->
   <div class="slide">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Market Opportunity</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
-      $29.6M ARR opportunity<br>within <span class="accent italic">24 months</span>
+    <div class="label">Who Pays Us</div>
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 32px;">
+      Four revenue streams,<br>
+      <span class="italic">one infrastructure layer</span>
     </h1>
-    <div class="rev-bar-group">
-      <div class="rev-bar-row">
-        <div class="rev-bar-label">Consumer SaaS</div>
-        <div class="rev-bar-track"><div class="rev-bar-fill" style="width: 22%; background: var(--lime);">$6.6M</div></div>
+    <div class="data-grid" style="grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 900px;">
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--amber-600); margin-bottom: 12px;">Pillar 1 &middot; Long-term Primary</div>
+        <h3 style="font-size: 22px; margin-bottom: 8px;">API Customers</h3>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6; margin-bottom: 16px;">
+          Other fintechs, banks, and tools integrate Sift to add item-level data. They pay per receipt processed. This is the Plaid-style infrastructure revenue.
+        </p>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">$30M ARR</div>
+        <div style="font-size: 12px; color: var(--stone-400);">Year 3 target</div>
       </div>
-      <div class="rev-bar-row">
-        <div class="rev-bar-label">Enterprise</div>
-        <div class="rev-bar-track"><div class="rev-bar-fill" style="width: 61%; background: var(--sky);">$18M</div></div>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sky); margin-bottom: 12px;">Pillar 2 &middot; Near-term Revenue</div>
+        <h3 style="font-size: 22px; margin-bottom: 8px;">Direct Enterprise</h3>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6; margin-bottom: 16px;">
+          Item-level employee expense intelligence sold directly to mid-market companies. $25-50/seat/month. Highest margin, fastest sales cycle, validates the market.
+        </p>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">$20M ARR</div>
+        <div style="font-size: 12px; color: var(--stone-400);">Year 3 target</div>
       </div>
-      <div class="rev-bar-row">
-        <div class="rev-bar-label">Data Licensing</div>
-        <div class="rev-bar-track"><div class="rev-bar-fill" style="width: 17%; background: var(--amber-500);">$5M</div></div>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--lime); margin-bottom: 12px;">Pillar 3 &middot; User Engine</div>
+        <h3 style="font-size: 22px; margin-bottom: 8px;">Direct Consumer</h3>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6; margin-bottom: 16px;">
+          Freemium app that drives the user base, generates training data for the AI engine, and demonstrates the value of item-level data to potential API customers.
+        </p>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">$5M ARR</div>
+        <div style="font-size: 12px; color: var(--stone-400);">Year 3 target &middot; 1M users</div>
+      </div>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--violet); margin-bottom: 12px;">Pillar 4 &middot; Scale Unlock</div>
+        <h3 style="font-size: 22px; margin-bottom: 8px;">Data Licensing</h3>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6; margin-bottom: 16px;">
+          Anonymized item-level purchase trends licensed to CPG brands, retailers, market research firms, and hedge funds. Activates at 100K+ users.
+        </p>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">$5M ARR</div>
+        <div style="font-size: 12px; color: var(--stone-400);">Year 3 target &middot; 10 deals</div>
       </div>
     </div>
-    <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
-      <div>
-        <div style="font-size: 12px; color: var(--stone-400); margin-bottom: 4px;">Personal Finance TAM</div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">$1.5B</div>
-        <div style="font-size: 12px; color: var(--stone-400);">12% CAGR</div>
-      </div>
-      <div>
-        <div style="font-size: 12px; color: var(--stone-400); margin-bottom: 4px;">Expense Management TAM</div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">$8.5B</div>
-        <div style="font-size: 12px; color: var(--stone-400);">15% CAGR</div>
-      </div>
-      <div>
-        <div style="font-size: 12px; color: var(--stone-400); margin-bottom: 4px;">Alternative Data TAM</div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">$7.3B</div>
-        <div style="font-size: 12px; color: var(--stone-400);">40% CAGR</div>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">05</span> / 15</div>
+    <div class="slide-num"><span class="current">06</span> / 14</div>
   </div>
 
-  <!-- SLIDE 6: Competitive Landscape -->
+  <!-- SLIDE 7: Plaid Comparison -->
+  <div class="slide">
+    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
+    <div class="label">The Plaid Playbook</div>
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
+      We&rsquo;re running the same playbook<br>
+      that built a <span class="accent italic">$13B company</span>
+    </h1>
+    <div class="two-col" style="max-width: 1000px;">
+      <div>
+        <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 28px; background: white;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--stone-400); margin-bottom: 16px;">Plaid (2013)</div>
+          <p style="font-size: 14px; color: var(--stone-700); line-height: 1.6; margin-bottom: 16px;">
+            Built infrastructure for bank account data. Didn&rsquo;t compete with Venmo, Robinhood, or Coinbase &mdash; became the pipe they all run on.
+          </p>
+          <div style="display: flex; gap: 24px; margin-top: 20px;">
+            <div>
+              <div class="mono" style="font-size: 18px; font-weight: 600;">$13B</div>
+              <div style="font-size: 11px; color: var(--stone-400);">valuation</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size: 18px; font-weight: 600;">8,000+</div>
+              <div style="font-size: 11px; color: var(--stone-400);">apps integrated</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="border: 2px solid var(--stone-900); border-radius: 12px; padding: 28px; background: var(--stone-900); color: white;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--amber-400); margin-bottom: 16px;">Sift (2026)</div>
+          <p style="font-size: 14px; color: white; line-height: 1.6; margin-bottom: 16px;">
+            Building infrastructure for itemized purchase data. Won&rsquo;t compete with Mint, Monarch, or Expensify &mdash; will become the pipe they all run on.
+          </p>
+          <div style="display: flex; gap: 24px; margin-top: 20px;">
+            <div>
+              <div class="mono" style="font-size: 18px; font-weight: 600; color: var(--amber-400);">$5-15B</div>
+              <div style="font-size: 11px; color: var(--stone-500);">target valuation</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size: 18px; font-weight: 600; color: var(--amber-400);">100+</div>
+              <div style="font-size: 11px; color: var(--stone-500);">target integrations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 32px; font-size: 14px; color: var(--stone-500); max-width: 700px; line-height: 1.6;">
+      Infrastructure plays beat product plays. Plaid didn&rsquo;t need to win the consumer fintech war &mdash; they collected revenue from every player. Sift will do the same for item-level purchase data.
+    </p>
+    <div class="slide-num"><span class="current">07</span> / 14</div>
+  </div>
+
+  <!-- SLIDE 8: Competitive Landscape -->
   <div class="slide">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
     <div class="label">Competition</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
-      Nobody does this
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 32px;">
+      Nobody is building <span class="italic">infrastructure</span>
     </h1>
-    <table class="comp-table">
+    <table class="comp-table" style="max-width: 900px;">
       <thead>
-        <tr><th>Company</th><th>What they do</th><th>Item-level data</th><th>AI categorization</th></tr>
+        <tr><th>Company</th><th>What They Do</th><th>Item Data?</th><th>Multi-source?</th><th>Public API?</th></tr>
       </thead>
       <tbody>
-        <tr><td>Mint / Credit Karma</td><td>Budget tracking</td><td class="x">No</td><td class="x">No</td></tr>
-        <tr><td>Expensify</td><td>Expense reports</td><td class="x">No</td><td class="x">Basic</td></tr>
-        <tr><td>Ramp / Brex</td><td>Corporate cards</td><td class="x">No</td><td class="x">Basic</td></tr>
-        <tr><td>Fetch Rewards</td><td>Receipt scanning</td><td style="color: var(--stone-500);">For rewards only</td><td class="x">No</td></tr>
-        <tr><td>YNAB</td><td>Manual budgeting</td><td class="x">No</td><td class="x">No</td></tr>
-        <tr><td style="font-weight: 700;">Sift</td><td style="font-weight: 700;">Receipt intelligence</td><td class="check">Yes</td><td class="check">94% accuracy</td></tr>
+        <tr><td>Mint / Monarch</td><td>Personal finance app</td><td class="x">No</td><td class="x">Bank only</td><td class="x">No</td></tr>
+        <tr><td>Expensify / Ramp</td><td>Expense management</td><td class="x">No</td><td class="x">Cards only</td><td class="x">No</td></tr>
+        <tr><td>Sensibill</td><td>Receipt data API</td><td>Limited</td><td class="x">Bank only</td><td>Yes</td></tr>
+        <tr><td>Veryfi / Klippa</td><td>Document OCR</td><td>OCR only</td><td class="x">No aggregation</td><td>Yes</td></tr>
+        <tr><td>Plaid</td><td>Bank account API</td><td class="x">No</td><td class="x">Bank only</td><td>Yes</td></tr>
+        <tr><td style="font-weight: 700;">Sift</td><td style="font-weight: 700;">Item-level data infrastructure</td><td class="check">Yes</td><td class="check">All sources</td><td class="check">Yes</td></tr>
       </tbody>
     </table>
-    <div class="slide-num"><span class="current">06</span> / 15</div>
+    <p style="margin-top: 24px; font-size: 14px; color: var(--stone-500); max-width: 700px;">
+      The closest comparable is Sensibill, but they only sell to banks and have a much weaker AI categorization layer. Nobody is building the full multi-source aggregation + AI + developer API stack.
+    </p>
+    <div class="slide-num"><span class="current">08</span> / 14</div>
   </div>
 
-  <!-- SLIDE 7: Pricing -->
-  <div class="slide">
+  <!-- SLIDE 9: Roadmap -->
+  <div class="slide dark">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Consumer Pricing</div>
+    <div class="label">Go-to-Market Roadmap</div>
     <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em;">
-      Simple, honest pricing
+      Bootstrap. Build. <span class="accent italic">Become inevitable.</span>
     </h1>
-    <div class="pricing-row">
-      <div class="price-card">
-        <div class="tier">Free</div>
-        <div class="amount">$0 <span>forever</span></div>
-        <ul>
-          <li>30 receipts/month</li>
-          <li>Basic categories</li>
-          <li>Receipt feed</li>
-        </ul>
+    <div class="roadmap">
+      <div class="roadmap-step">
+        <div class="period">PHASE 1 &middot; MONTHS 1-6</div>
+        <h4>Bootstrap Enterprise</h4>
+        <p>Founder-led sales to mid-market companies. Item-level expense intelligence at $25-50/seat/mo. Goal: $20-50K MRR with no team. Validates the market and funds growth.</p>
       </div>
-      <div class="price-card featured">
-        <div class="tier">Plus</div>
-        <div class="amount">$8 <span>/month</span></div>
-        <ul>
-          <li>Unlimited receipts</li>
-          <li>AI chat assistant</li>
-          <li>Smart budgets</li>
-          <li>Priority categorization</li>
-        </ul>
+      <div class="roadmap-step">
+        <div class="period">PHASE 2 &middot; MONTHS 6-12</div>
+        <h4>API Beta</h4>
+        <p>Launch developer API with 5-10 design partners. Neobanks, regional credit unions, tax software. Free tier + pay-per-receipt. Goal: 10 paying API customers.</p>
       </div>
-      <div class="price-card">
-        <div class="tier">Pro</div>
-        <div class="amount">$15 <span>/month</span></div>
-        <ul>
-          <li>Everything in Plus</li>
-          <li>Tax categorization</li>
-          <li>Export to accountant</li>
-          <li>Priority support</li>
-        </ul>
+      <div class="roadmap-step">
+        <div class="period">PHASE 3 &middot; MONTHS 12-24</div>
+        <h4>API General Availability</h4>
+        <p>Self-serve developer signup. Open documentation. SDKs for every language. POS partnership conversations begin. Goal: 100+ paying API customers, $1M+ ARR.</p>
+      </div>
+      <div class="roadmap-step">
+        <div class="period">PHASE 4 &middot; YEAR 2-3</div>
+        <h4>The Sift Card</h4>
+        <p>Issue our own card via Marqeta or Lithic. 100% item-level coverage on every swipe. Becomes the largest data source AND a category-defining consumer product.</p>
       </div>
     </div>
-    <div style="margin-top: 32px; display: flex; gap: 48px;">
-      <div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">9.6x</div>
-        <div style="font-size: 12px; color: var(--stone-400);">LTV/CAC ratio</div>
-      </div>
-      <div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">85%+</div>
-        <div style="font-size: 12px; color: var(--stone-400);">gross margin</div>
-      </div>
-      <div>
-        <div class="mono" style="font-size: 20px; font-weight: 600;">$15</div>
-        <div style="font-size: 12px; color: var(--stone-400);">target CAC</div>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">07</span> / 15</div>
+    <div class="slide-num"><span class="current">09</span> / 14</div>
   </div>
 
-  <!-- SLIDE 8: Enterprise -->
-  <div class="slide dark">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Enterprise Value Prop</div>
-    <h2 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; max-width: 600px;">
-      "Your field team spent $14K at gas stations. <span class="accent italic">$4,200 was snacks.</span>"
-    </h2>
-    <p style="margin-top: 20px; font-size: 16px; color: var(--stone-400); max-width: 500px; line-height: 1.6;">
-      Every CFO knows their team spends money. No CFO knows what they're actually buying. Sift shows them — item by item, employee by employee.
-    </p>
-    <div class="ask-grid" style="max-width: 700px;">
-      <div class="ask-item">
-        <div class="amount">$25-50</div>
-        <div class="use">per seat / month</div>
-      </div>
-      <div class="ask-item">
-        <div class="amount">$3-5K</div>
-        <div class="use">avg monthly contract</div>
-      </div>
-      <div class="ask-item">
-        <div class="amount">ROI</div>
-        <div class="use">Identifies 15-30% non-business spend on company cards</div>
-      </div>
-      <div class="ask-item">
-        <div class="amount">10x</div>
-        <div class="use">faster than manual expense auditing</div>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">08</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 9: Go-to-Market -->
+  <!-- SLIDE 10: Defensibility -->
   <div class="slide">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Go-to-Market</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em;">
-      Phased rollout to <span class="accent italic">$2.5M MRR</span>
+    <div class="label">The Moat</div>
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
+      Why this becomes <span class="italic">unkillable</span>
     </h1>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="period">Months 1-3</div>
-        <h4>Consumer Launch</h4>
-        <p>Free + paid app. Content marketing showing real spending breakdowns. Viral share cards. Target: 10K users.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 900px;">
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 28px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--amber-600); margin-bottom: 8px;">01</div>
+        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Multi-source data aggregation</h4>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6;">No competitor has built the full ingestion stack across email, retailer APIs, OCR, POS, and card networks. Each new source compounds the moat.</p>
       </div>
-      <div class="timeline-item">
-        <div class="period">Months 3-6</div>
-        <h4>Enterprise Pilot</h4>
-        <p>Direct outreach to CFOs. "We'll show you what your team actually buys." 10 enterprise clients at $3K/mo avg.</p>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 28px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--amber-600); margin-bottom: 8px;">02</div>
+        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">AI training data flywheel</h4>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6;">Every receipt processed makes the AI smarter. Every user correction trains both per-user AND cross-user models. Compounds with every interaction.</p>
       </div>
-      <div class="timeline-item">
-        <div class="period">Months 6-12</div>
-        <h4>Scale + Data</h4>
-        <p>50K users. First data licensing deals with CPG brands. Partner with corporate card issuers.</p>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 28px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--amber-600); margin-bottom: 8px;">03</div>
+        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">API integration switching cost</h4>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6;">Once 50+ fintechs depend on Sift, switching means rewriting their product. Plaid&rsquo;s moat. Stripe&rsquo;s moat. Once we&rsquo;re infrastructure, we&rsquo;re permanent.</p>
       </div>
-      <div class="timeline-item">
-        <div class="period">Year 2</div>
-        <h4>Dominance</h4>
-        <p>1M users. 200 enterprise clients. 10 data deals. $2.5M MRR. Category leader.</p>
+      <div style="border: 1px solid var(--stone-200); border-radius: 12px; padding: 28px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--amber-600); margin-bottom: 8px;">04</div>
+        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Aggregated data asset</h4>
+        <p style="font-size: 13px; color: var(--stone-500); line-height: 1.6;">The anonymized dataset becomes exponentially more valuable with scale. Hedge funds and CPG brands will pay seven figures for this data. Acquisition target.</p>
       </div>
     </div>
-    <div class="slide-num"><span class="current">09</span> / 15</div>
+    <div class="slide-num"><span class="current">10</span> / 14</div>
   </div>
 
-  <!-- SLIDE 10: Traction -->
-  <div class="slide">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Traction</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 48px;">
-      Built and shipped in <span class="accent italic">48 hours</span>
-    </h1>
-    <div class="data-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="data-cell">
-        <div class="value" style="color: var(--amber-600);">Live</div>
-        <div class="desc">Product deployed and functional</div>
-      </div>
-      <div class="data-cell">
-        <div class="value">19</div>
-        <div class="desc">Production routes</div>
-      </div>
-      <div class="data-cell">
-        <div class="value">AI</div>
-        <div class="desc">Chat + categorization working</div>
-      </div>
-      <div class="data-cell">
-        <div class="value">Stripe</div>
-        <div class="desc">Billing integrated</div>
-      </div>
-    </div>
-    <div style="margin-top: 48px; max-width: 600px;">
-      <h3 style="font-size: 18px; margin-bottom: 16px;">Next 30 days</h3>
-      <div style="font-size: 14px; color: var(--stone-600); line-height: 2;">
-        <div style="display: flex; gap: 12px;"><span style="color: var(--stone-300);">&square;</span> First 100 consumer users</div>
-        <div style="display: flex; gap: 12px;"><span style="color: var(--stone-300);">&square;</span> Email receipt auto-parsing (Gmail/Outlook)</div>
-        <div style="display: flex; gap: 12px;"><span style="color: var(--stone-300);">&square;</span> First enterprise pilot conversation</div>
-        <div style="display: flex; gap: 12px;"><span style="color: var(--stone-300);">&square;</span> Custom domain + SEO launch</div>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">10</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 11: Defensibility -->
-  <div class="slide dark">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">Defensibility</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 48px;">
-      Four compounding moats
-    </h1>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 800px;">
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 28px;">
-        <div style="font-size: 28px; margin-bottom: 8px; color: var(--amber-400);">01</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Data Network Effect</h4>
-        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">More users = better categorization = better product = more users. Every receipt trains the model.</p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 28px;">
-        <div style="font-size: 28px; margin-bottom: 8px; color: var(--amber-400);">02</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Category Taxonomy</h4>
-        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">147 categories with subcategories, continuously refined by user corrections and merchant patterns.</p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 28px;">
-        <div style="font-size: 28px; margin-bottom: 8px; color: var(--amber-400);">03</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">User Correction Flywheel</h4>
-        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">Every correction trains per-user AND cross-user models. The system gets smarter with every interaction.</p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 28px;">
-        <div style="font-size: 28px; margin-bottom: 8px; color: var(--amber-400);">04</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Aggregated Data Asset</h4>
-        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">The anonymized dataset becomes exponentially more valuable with scale. This is the long-term goldmine.</p>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">11</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 12: Road to 100% -->
-  <div class="slide">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">The Roadmap</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 48px;">
-      The path to <span class="accent italic">100% coverage</span>
-    </h1>
-    <div style="display: flex; gap: 0; max-width: 900px;">
-      <div style="flex: 1; padding: 28px; border: 1px solid var(--stone-200); border-right: none; border-radius: 16px 0 0 16px; position: relative;">
-        <div style="position: absolute; top: -12px; left: 20px; background: var(--cream); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--amber-600);">PHASE 1 &middot; NOW</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: var(--amber-600);">85%</div>
-        <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Software Layer</div>
-        <p style="font-size: 12px; color: var(--stone-500); line-height: 1.5;">Email parsing, retailer account linking, bank matching. User connects once, everything flows automatically.</p>
-        <div style="margin-top: 16px; height: 6px; background: var(--stone-100); border-radius: 3px; overflow: hidden;">
-          <div style="width: 85%; height: 100%; background: var(--amber-500); border-radius: 3px;"></div>
-        </div>
-      </div>
-      <div style="flex: 1; padding: 28px; border: 1px solid var(--stone-200); border-right: none; position: relative;">
-        <div style="position: absolute; top: -12px; left: 20px; background: var(--cream); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--sky);">PHASE 2 &middot; YEAR 1-2</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: var(--sky);">97%</div>
-        <div style="font-size: 14px; font-weight: 600; margin: 8px 0;">Partnership Layer</div>
-        <p style="font-size: 12px; color: var(--stone-500); line-height: 1.5;">POS partnerships (Square, Toast, Clover). Neobank white-label deals. Digital receipt standards.</p>
-        <div style="margin-top: 16px; height: 6px; background: var(--stone-100); border-radius: 3px; overflow: hidden;">
-          <div style="width: 97%; height: 100%; background: var(--sky); border-radius: 3px;"></div>
-        </div>
-      </div>
-      <div style="flex: 1; padding: 28px; border: 1px solid var(--stone-900); background: var(--stone-900); border-radius: 0 16px 16px 0; position: relative;">
-        <div style="position: absolute; top: -12px; left: 20px; background: var(--stone-900); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--amber-400);">PHASE 3 &middot; YEAR 2-3</div>
-        <div class="mono" style="font-size: 36px; font-weight: 600; color: var(--amber-400);">100%</div>
-        <div style="font-size: 14px; font-weight: 600; margin: 8px 0; color: white;">The Sift Card</div>
-        <p style="font-size: 12px; color: var(--stone-400); line-height: 1.5;">Our own debit/credit card via Marqeta. We sit in the payment flow. Every swipe, every item, automatically.</p>
-        <div style="margin-top: 16px; height: 6px; background: var(--stone-700); border-radius: 3px; overflow: hidden;">
-          <div style="width: 100%; height: 100%; background: var(--amber-400); border-radius: 3px;"></div>
-        </div>
-      </div>
-    </div>
-    <p style="margin-top: 32px; font-size: 14px; color: var(--stone-500); max-width: 700px;">
-      Each phase funds and enables the next. Software revenue funds partnership development. User base provides leverage for POS deals. Partnerships prove the model for the card launch.
-    </p>
-    <div class="slide-num"><span class="current">12</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 13: The Sift Card -->
-  <div class="slide dark">
-    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
-    <div class="label">The Endgame</div>
-    <h1 style="font-size: 52px; line-height: 1.05; letter-spacing: -0.02em; max-width: 700px;">
-      The card that knows<br><span class="accent italic">what you bought</span>
-    </h1>
-    <p style="margin-top: 20px; font-size: 16px; color: var(--stone-400); max-width: 520px; line-height: 1.6;">
-      Every card in existence shows where you shopped. The Sift Card shows what you bought. Swipe at a gas station &mdash; see "$32 fuel, $9 snacks, $6 energy drinks" in 3 seconds. No scanning. No emails. Just swipe.
-    </p>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; max-width: 700px;">
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
-        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--stone-500); margin-bottom: 12px;">Why this works</div>
-        <p style="font-size: 13px; color: var(--stone-300); line-height: 1.6;">As the card issuer, we receive Level 3 item data directly from the merchant's payment processor. No partnerships needed. No manual effort. The data flows to us by default.</p>
-      </div>
-      <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
-        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--stone-500); margin-bottom: 12px;">Why nobody&rsquo;s done it</div>
-        <p style="font-size: 13px; color: var(--stone-300); line-height: 1.6;">Banks profit from ignorance &mdash; more spending = more fees. Ramp and Brex issue cards but only show merchant-level data. No card has ever shown item-level data. We&rsquo;d be the first.</p>
-      </div>
-    </div>
-    <div style="display: flex; gap: 40px; margin-top: 40px;">
-      <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600; color: var(--amber-400);">$52M</div>
-        <div style="font-size: 12px; color: var(--stone-500);">annual card revenue at 100K holders</div>
-      </div>
-      <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600; color: var(--amber-400);">38x</div>
-        <div style="font-size: 12px; color: var(--stone-500);">LTV/CAC on card product</div>
-      </div>
-      <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600; color: var(--amber-400);">$4-12B</div>
-        <div style="font-size: 12px; color: var(--stone-500);">valuation range at scale</div>
-      </div>
-    </div>
-    <div class="slide-num"><span class="current">13</span> / 15</div>
-  </div>
-
-  <!-- SLIDE 14: Why Now -->
+  <!-- SLIDE 11: Why Now -->
   <div class="slide">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
     <div class="label">Why Now</div>
-    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 48px;">
-      Five tailwinds converging
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
+      Five tailwinds <span class="italic">converging</span>
     </h1>
     <div style="max-width: 700px;">
-      <div style="display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--stone-200);">
-        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-600); width: 40px; flex-shrink: 0;">01</div>
+      <div style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--stone-200);">
+        <div class="mono" style="font-size: 20px; font-weight: 600; color: var(--amber-600); width: 32px;">01</div>
         <div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">AI accuracy crossed the threshold</h4>
-          <p style="font-size: 13px; color: var(--stone-500);">94% categorization accuracy was impossible 2 years ago. Modern LLMs make item extraction and classification reliable enough for production use.</p>
+          <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">AI accuracy crossed the threshold</h4>
+          <p style="font-size: 13px; color: var(--stone-500);">94% categorization accuracy was impossible 2 years ago. Modern LLMs make production deployment finally viable.</p>
         </div>
       </div>
-      <div style="display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--stone-200);">
-        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-600); width: 40px; flex-shrink: 0;">02</div>
+      <div style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--stone-200);">
+        <div class="mono" style="font-size: 20px; font-weight: 600; color: var(--amber-600); width: 32px;">02</div>
         <div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Digital receipts are standard</h4>
-          <p style="font-size: 13px; color: var(--stone-500);">80%+ of major retailers now email receipts. Five years ago it was 30%. The data is finally accessible at scale.</p>
+          <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Digital receipts are mainstream</h4>
+          <p style="font-size: 13px; color: var(--stone-500);">80%+ of major retailers now email receipts. The data is finally accessible. 5 years ago this percentage was 30%.</p>
         </div>
       </div>
-      <div style="display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--stone-200);">
-        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-600); width: 40px; flex-shrink: 0;">03</div>
+      <div style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--stone-200);">
+        <div class="mono" style="font-size: 20px; font-weight: 600; color: var(--amber-600); width: 32px;">03</div>
         <div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">BaaS makes card issuing possible</h4>
-          <p style="font-size: 13px; color: var(--stone-500);">Marqeta, Lithic, Unit &mdash; you can now launch a card program without a banking license. This was impossible for startups 5 years ago.</p>
+          <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">API-first fintech is the norm</h4>
+          <p style="font-size: 13px; color: var(--stone-500);">Every fintech expects to integrate infrastructure rather than build it. Plaid, Stripe, Marqeta proved the model. Sift is the next layer.</p>
         </div>
       </div>
-      <div style="display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--stone-200);">
-        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-600); width: 40px; flex-shrink: 0;">04</div>
+      <div style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--stone-200);">
+        <div class="mono" style="font-size: 20px; font-weight: 600; color: var(--amber-600); width: 32px;">04</div>
         <div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Consumer data rights are expanding</h4>
-          <p style="font-size: 13px; color: var(--stone-500);">CFPB Section 1033 established that consumers own their financial data. Regulatory momentum is on the side of data portability.</p>
+          <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Consumer data rights expanding</h4>
+          <p style="font-size: 13px; color: var(--stone-500);">CFPB Section 1033 protects consumer ownership of financial data. Regulatory momentum is on the side of data portability and aggregators.</p>
         </div>
       </div>
-      <div style="display: flex; gap: 20px; align-items: flex-start; padding: 20px 0;">
-        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-600); width: 40px; flex-shrink: 0;">05</div>
+      <div style="display: flex; gap: 20px; padding: 16px 0;">
+        <div class="mono" style="font-size: 20px; font-weight: 600; color: var(--amber-600); width: 32px;">05</div>
         <div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Alternative data market exploding</h4>
-          <p style="font-size: 13px; color: var(--stone-500);">$7.3B market growing 40% CAGR. Hedge funds and CPG brands are desperate for item-level purchase data. Nobody has it at scale.</p>
+          <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Alternative data market exploding</h4>
+          <p style="font-size: 13px; color: var(--stone-500);">$7.3B and growing 40% CAGR. Hedge funds and CPG brands desperate for item-level purchase data. No one has it at scale.</p>
         </div>
       </div>
     </div>
-    <div class="slide-num"><span class="current">14</span> / 15</div>
+    <div class="slide-num"><span class="current">11</span> / 14</div>
   </div>
 
-  <!-- SLIDE 15: The Ask -->
+  <!-- SLIDE 12: Traction -->
+  <div class="slide">
+    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
+    <div class="label">Where We Are Today</div>
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
+      Built and deployed in <span class="accent italic">48 hours</span>
+    </h1>
+    <div class="data-grid" style="grid-template-columns: repeat(4, 1fr); max-width: 900px;">
+      <div class="data-cell">
+        <div class="value" style="color: var(--amber-600);">Live</div>
+        <div class="desc">Product deployed at sift-iota.vercel.app</div>
+      </div>
+      <div class="data-cell">
+        <div class="value">19</div>
+        <div class="desc">Production routes including chat, dashboard, billing</div>
+      </div>
+      <div class="data-cell">
+        <div class="value">94%</div>
+        <div class="desc">AI categorization accuracy on receipts</div>
+      </div>
+      <div class="data-cell">
+        <div class="value">0</div>
+        <div class="desc">Engineers hired. Built solo with AI tooling.</div>
+      </div>
+    </div>
+    <div style="margin-top: 40px; max-width: 700px;">
+      <h3 style="font-size: 16px; margin-bottom: 16px; font-weight: 600;">Next 90 days</h3>
+      <div style="font-size: 14px; color: var(--stone-600); line-height: 2;">
+        <div>&middot; Public API beta with 3-5 design partners</div>
+        <div>&middot; Gmail + Plaid integrations (data sources)</div>
+        <div>&middot; First 10 enterprise customers ($25-50K MRR)</div>
+        <div>&middot; Developer documentation site live</div>
+        <div>&middot; First POS partnership conversation</div>
+      </div>
+    </div>
+    <div class="slide-num"><span class="current">12</span> / 14</div>
+  </div>
+
+  <!-- SLIDE 13: Financials -->
+  <div class="slide dark">
+    <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
+    <div class="label">Financial Trajectory</div>
+    <h1 style="font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 40px;">
+      Path to <span class="accent italic">$60M ARR</span>
+    </h1>
+    <table style="width: 100%; max-width: 800px; border-collapse: collapse; font-size: 14px;">
+      <thead>
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+          <th style="text-align: left; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--stone-500); font-weight: 500;">Year</th>
+          <th style="text-align: right; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--stone-500); font-weight: 500;">API</th>
+          <th style="text-align: right; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--stone-500); font-weight: 500;">Enterprise</th>
+          <th style="text-align: right; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--stone-500); font-weight: 500;">Consumer</th>
+          <th style="text-align: right; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--stone-500); font-weight: 500;">Data</th>
+          <th style="text-align: right; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--amber-400); font-weight: 500;">Total ARR</th>
+        </tr>
+      </thead>
+      <tbody style="font-family: 'JetBrains Mono', monospace; color: white;">
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 16px;">Year 1</td><td style="text-align: right; padding: 16px; color: var(--stone-500);">&mdash;</td><td style="text-align: right; padding: 16px;">$200K</td><td style="text-align: right; padding: 16px;">$50K</td><td style="text-align: right; padding: 16px; color: var(--stone-500);">&mdash;</td><td style="text-align: right; padding: 16px; color: var(--amber-400); font-weight: 600;">$250K</td></tr>
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 16px;">Year 2</td><td style="text-align: right; padding: 16px;">$2M</td><td style="text-align: right; padding: 16px;">$5M</td><td style="text-align: right; padding: 16px;">$1M</td><td style="text-align: right; padding: 16px;">$1M</td><td style="text-align: right; padding: 16px; color: var(--amber-400); font-weight: 600;">$9M</td></tr>
+        <tr><td style="padding: 16px;">Year 3</td><td style="text-align: right; padding: 16px;">$30M</td><td style="text-align: right; padding: 16px;">$20M</td><td style="text-align: right; padding: 16px;">$5M</td><td style="text-align: right; padding: 16px;">$5M</td><td style="text-align: right; padding: 16px; color: var(--amber-400); font-weight: 700; font-size: 16px;">$60M</td></tr>
+      </tbody>
+    </table>
+    <div style="display: flex; gap: 48px; margin-top: 48px;">
+      <div>
+        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-400);">85%+</div>
+        <div style="font-size: 12px; color: var(--stone-500);">gross margin</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-400);">9.6x</div>
+        <div style="font-size: 12px; color: var(--stone-500);">consumer LTV/CAC</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-400);">21.6x</div>
+        <div style="font-size: 12px; color: var(--stone-500);">enterprise LTV/CAC</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size: 24px; font-weight: 600; color: var(--amber-400);">$5-15B</div>
+        <div style="font-size: 12px; color: var(--stone-500);">target valuation</div>
+      </div>
+    </div>
+    <div class="slide-num"><span class="current">13</span> / 14</div>
+  </div>
+
+  <!-- SLIDE 14: The Ask -->
   <div class="slide" style="text-align: center; align-items: center;">
     <div class="logo-mark"><div class="mark">S</div><span>sift</span></div>
     <div class="label">The Ask</div>
     <h1 style="font-size: 56px; line-height: 1.1; letter-spacing: -0.02em;">
-      Seed Round: <span class="accent">$750K &ndash; $1.5M</span>
+      Seed Round: <span class="accent">$1.5M &ndash; $3M</span>
     </h1>
-    <p style="margin-top: 20px; font-size: 18px; color: var(--stone-500); max-width: 560px; line-height: 1.6;">
-      Build the software layer, prove the model, and begin partnership development for 100% coverage.
+    <p style="margin-top: 20px; font-size: 18px; color: var(--stone-500); max-width: 600px; line-height: 1.6;">
+      Build the API infrastructure, sign first POS partnership, hire founding team. 18-month runway to Series A.
     </p>
+    <div style="margin-top: 48px; max-width: 600px; text-align: left;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--stone-400); margin-bottom: 12px;">Use of funds</div>
+      <div style="font-size: 14px; color: var(--stone-700); line-height: 2;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 6px 0;"><span>Engineering team (CTO + 3 engineers)</span><span class="mono">50%</span></div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 6px 0;"><span>Partnerships lead + enterprise AE</span><span class="mono">25%</span></div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 6px 0;"><span>Infrastructure, AI costs, SOC 2</span><span class="mono">15%</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0;"><span>Legal, marketing, ops</span><span class="mono">10%</span></div>
+      </div>
+    </div>
     <div style="display: flex; gap: 48px; margin-top: 48px;">
       <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600;">2</div>
-        <div style="font-size: 12px; color: var(--stone-400);">engineering hires</div>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">50</div>
+        <div style="font-size: 12px; color: var(--stone-400);">enterprise customers</div>
       </div>
       <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600;">18mo</div>
-        <div style="font-size: 12px; color: var(--stone-400);">to profitability</div>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">10</div>
+        <div style="font-size: 12px; color: var(--stone-400);">API design partners</div>
       </div>
       <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600;">$2.5M</div>
-        <div style="font-size: 12px; color: var(--stone-400);">MRR target (Year 2)</div>
-      </div>
-      <div>
-        <div class="mono" style="font-size: 28px; font-weight: 600;">$12M</div>
-        <div style="font-size: 12px; color: var(--stone-400);">MRR with card (Year 3)</div>
+        <div class="mono" style="font-size: 24px; font-weight: 600;">$1M+</div>
+        <div style="font-size: 12px; color: var(--stone-400);">ARR by month 18</div>
       </div>
     </div>
-    <div style="margin-top: 56px; max-width: 500px; text-align: left; margin-left: auto; margin-right: auto;">
-      <div style="font-size: 13px; color: var(--stone-500); line-height: 2;">
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 4px 0;"><span>Engineering (CTO + AI engineer)</span><span class="mono" style="color: var(--stone-700);">45%</span></div>
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 4px 0;"><span>Growth marketing + content</span><span class="mono" style="color: var(--stone-700);">25%</span></div>
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--stone-200); padding: 4px 0;"><span>Infrastructure + AI costs</span><span class="mono" style="color: var(--stone-700);">15%</span></div>
-        <div style="display: flex; justify-content: space-between; padding: 4px 0;"><span>Partnership development + legal</span><span class="mono" style="color: var(--stone-700);">15%</span></div>
-      </div>
+    <div style="margin-top: 56px;">
+      <div style="font-size: 22px; font-weight: 600; margin-bottom: 6px;">sift-iota.vercel.app</div>
+      <div style="font-size: 13px; color: var(--stone-400);">Live product &middot; Working AI &middot; Stripe billing active</div>
     </div>
-    <div style="margin-top: 48px;">
-      <div style="font-size: 24px; font-weight: 600; margin-bottom: 8px;">sift-iota.vercel.app</div>
-      <div style="font-size: 14px; color: var(--stone-400);">Live product &middot; Working AI &middot; Stripe billing active</div>
-    </div>
-    <div class="slide-num"><span class="current">15</span> / 15</div>
+    <div class="slide-num"><span class="current">14</span> / 14</div>
   </div>
 
 </div>
@@ -977,7 +898,6 @@
     else goTo(current - 1);
   });
 
-  // Custom cursor
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX - 6 + 'px';

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sift — Business Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAFAF7;
+    --stone-100: #f5f5f4;
+    --stone-200: #e7e5e4;
+    --stone-300: #d6d3d1;
+    --stone-400: #a8a29e;
+    --stone-500: #78716c;
+    --stone-600: #57534e;
+    --stone-700: #44403c;
+    --stone-800: #292524;
+    --stone-900: #1c1917;
+    --amber-400: #fbbf24;
+    --amber-500: #f59e0b;
+    --amber-600: #d97706;
+    --lime: #a3e635;
+    --sky: #38bdf8;
+    --rose: #fb7185;
+    --violet: #a78bfa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--stone-900);
+    line-height: 1.6;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 32px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 80px 0 64px;
+    border-bottom: 1px solid var(--stone-200);
+    margin-bottom: 80px;
+  }
+  .logo {
+    width: 72px;
+    height: 72px;
+    background: var(--stone-900);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+    color: white;
+    font-weight: 700;
+    font-size: 32px;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+  }
+  .header .subtitle {
+    margin-top: 24px;
+    font-size: 18px;
+    color: var(--stone-500);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .header .meta {
+    margin-top: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--stone-400);
+  }
+
+  /* Section */
+  section {
+    margin-bottom: 96px;
+  }
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--amber-600);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    margin-top: 32px;
+    font-weight: 400;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 24px;
+  }
+  p {
+    font-size: 16px;
+    color: var(--stone-700);
+    margin-bottom: 16px;
+  }
+  p.lead {
+    font-size: 19px;
+    color: var(--stone-600);
+    line-height: 1.6;
+  }
+  .accent { color: var(--amber-600); }
+  .italic { font-style: italic; }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 3px solid var(--amber-500);
+    padding: 8px 0 8px 24px;
+    margin: 32px 0;
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--stone-800);
+    font-weight: 400;
+  }
+
+  /* Stats grid */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin: 32px 0;
+  }
+  .stat {
+    border-top: 2px solid var(--stone-900);
+    padding-top: 16px;
+  }
+  .stat .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat .desc {
+    font-size: 12px;
+    color: var(--stone-500);
+    line-height: 1.4;
+  }
+
+  /* Box */
+  .box {
+    background: white;
+    border: 1px solid var(--stone-200);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+  .box.dark {
+    background: var(--stone-900);
+    color: white;
+    border: none;
+  }
+  .box.dark p { color: var(--stone-300); }
+  .box.dark h3 { color: white; }
+  .box.amber {
+    background: #fef9c3;
+    border: 1px solid #fde68a;
+  }
+
+  /* Two column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin: 24px 0;
+  }
+  @media (max-width: 700px) {
+    .two-col, .stats { grid-template-columns: 1fr; }
+  }
+
+  /* Pillar list */
+  .pillars { margin: 32px 0; }
+  .pillar {
+    display: flex;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--stone-200);
+  }
+  .pillar:last-child { border-bottom: none; }
+  .pillar .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--amber-500);
+    flex-shrink: 0;
+    width: 80px;
+  }
+  .pillar h3 { margin-top: 0; }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--stone-500);
+    border-bottom: 2px solid var(--stone-300);
+    font-weight: 500;
+  }
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--stone-100);
+    color: var(--stone-700);
+  }
+  td.num {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+  }
+  .check { color: var(--amber-600); font-weight: 600; }
+  .x { color: var(--stone-300); }
+
+  /* Phase cards */
+  .phases {
+    margin: 32px 0;
+  }
+  .phase {
+    display: flex;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--stone-200);
+  }
+  .phase:first-child { border-top: 2px solid var(--stone-900); }
+  .phase .when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--amber-600);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 140px;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .phase .content { flex: 1; }
+  .phase h4 { margin: 0 0 6px; font-size: 18px; }
+  .phase p { margin: 0; font-size: 14px; }
+
+  /* Risk grid */
+  .risks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .risk {
+    border: 1px solid var(--stone-200);
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+  }
+  .risk h4 {
+    margin-top: 0;
+    font-size: 14px;
+    color: var(--stone-900);
+  }
+  .risk p {
+    font-size: 13px;
+    color: var(--stone-500);
+    margin: 0;
+  }
+
+  /* List */
+  ul.checklist { list-style: none; margin: 16px 0; }
+  ul.checklist li {
+    padding: 8px 0;
+    font-size: 15px;
+    color: var(--stone-700);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  ul.checklist li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber-500);
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+  ul.checklist li.done::before { background: var(--stone-300); }
+  ul.checklist li.done { color: var(--stone-400); text-decoration: line-through; }
+
+  /* Funding tiers */
+  .funding {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  @media (max-width: 700px) { .funding { grid-template-columns: 1fr; } }
+  .tier {
+    border: 1px solid var(--stone-200);
+    border-radius: 12px;
+    padding: 24px;
+    background: white;
+  }
+  .tier.featured {
+    background: var(--stone-900);
+    color: white;
+    border-color: var(--stone-900);
+  }
+  .tier .label-tier {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--stone-400);
+    margin-bottom: 12px;
+  }
+  .tier.featured .label-tier { color: var(--amber-400); }
+  .tier .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .tier p {
+    font-size: 13px;
+    margin-bottom: 0;
+  }
+  .tier.featured p { color: var(--stone-300); }
+
+  /* Footer CTA */
+  .cta {
+    background: var(--stone-900);
+    color: white;
+    padding: 64px 48px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 96px;
+  }
+  .cta h2 { color: white; }
+  .cta p { color: var(--stone-400); max-width: 480px; margin-left: auto; margin-right: auto; font-size: 17px; }
+  .cta .url {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--amber-400);
+    margin-top: 32px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cta .url-desc {
+    font-size: 12px;
+    color: var(--stone-500);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* TOC */
+  .toc {
+    background: white;
+    border: 1px solid var(--stone-200);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 80px;
+  }
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--stone-400);
+    margin-bottom: 16px;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+  }
+  .toc ol li {
+    counter-increment: toc-counter;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--stone-100);
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+  }
+  .toc ol li:last-child { border-bottom: none; }
+  .toc ol li::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--stone-300);
+    font-size: 12px;
+  }
+  .toc a {
+    color: var(--stone-700);
+    text-decoration: none;
+  }
+  .toc a:hover { color: var(--amber-600); }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="container">
+
+  <header class="header">
+    <div class="logo">S</div>
+    <h1>Business Plan</h1>
+    <p class="subtitle">The infrastructure layer for itemized purchase data</p>
+    <div class="meta">Sift &middot; April 2026 &middot; v1.0</div>
+  </header>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#summary">Executive Summary</a></li>
+      <li><a href="#vision">The Vision</a></li>
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#solution">The Solution &mdash; Three Pillars</a></li>
+      <li><a href="#revenue">Revenue Model</a></li>
+      <li><a href="#playbook">The Plaid Playbook</a></li>
+      <li><a href="#competition">Competition</a></li>
+      <li><a href="#gtm">Go-to-Market Strategy</a></li>
+      <li><a href="#moats">Defensibility</a></li>
+      <li><a href="#whynow">Why Now</a></li>
+      <li><a href="#financials">Financial Projections</a></li>
+      <li><a href="#funding">Funding Strategy</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#risks">Risks &amp; Mitigations</a></li>
+      <li><a href="#exits">Exit Scenarios</a></li>
+      <li><a href="#milestones">Milestones</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Executive Summary -->
+  <section id="summary">
+    <div class="label">01 &middot; Executive Summary</div>
+    <h2>The pipe for itemized purchase data</h2>
+    <p class="lead">
+      Sift is building the data infrastructure layer for itemized purchase intelligence. We&rsquo;re not another personal finance app or expense tracker. We&rsquo;re the pipe that makes item-level purchase data accessible to every consumer fintech, expense tool, and bank that needs it.
+    </p>
+    <div class="pullquote">
+      Plaid built the pipe for bank account data. Sift is building the pipe for what you actually bought.
+    </div>
+    <p>
+      Today, $10.5 trillion in US consumer spending is locked at the merchant level. Every bank, Mint, Monarch, Expensify, Ramp &mdash; they all show the same thing: &ldquo;Walmart $152.39.&rdquo; The data exists at the item level inside POS systems, card networks, and merchant databases. Nobody has built the infrastructure to unlock it and make it accessible.
+    </p>
+    <p>
+      Sift is that infrastructure. We aggregate item-level purchase data from email receipts, retailer APIs, POS partnerships, card networks, and (eventually) our own card. Then we expose it through an API that any fintech, bank, or business can integrate.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">$10.5T</div>
+        <div class="desc">US consumer spending invisible at item level</div>
+      </div>
+      <div class="stat">
+        <div class="num">94%</div>
+        <div class="desc">AI categorization accuracy today</div>
+      </div>
+      <div class="stat">
+        <div class="num">$60M</div>
+        <div class="desc">ARR target by Year 3</div>
+      </div>
+      <div class="stat">
+        <div class="num">$5-15B</div>
+        <div class="desc">Target valuation range</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The Vision -->
+  <section id="vision">
+    <div class="label">02 &middot; The Vision</div>
+    <h2>What we&rsquo;re building</h2>
+    <p class="lead">
+      A data infrastructure layer with three customer types and one shared engine. Each customer type validates the others. Each one funds the next phase of growth.
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <div>
+          <h3>API Customers (B2B2C)</h3>
+          <p>Other fintech apps, banks, and expense tools integrate the Sift API to add item-level data to their products. Monarch, Mint, Expensify, Ramp, neobanks, credit unions &mdash; they pay us per receipt processed. This is the long-term primary revenue stream.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <div>
+          <h3>Direct Enterprise</h3>
+          <p>Item-level employee expense intelligence sold directly to mid-market companies. $25-50/seat/month. Highest-margin near-term revenue. Validates the value of item-level data and funds infrastructure development while we build the API.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <div>
+          <h3>Direct Consumer</h3>
+          <p>Sift&rsquo;s own consumer app demonstrates the data product, builds the user base that powers the data engine, and serves users who want item-level intelligence directly. The consumer app is also the AI training engine &mdash; every receipt and correction makes the entire platform smarter.</p>
+        </div>
+      </div>
+    </div>
+    <div class="box dark">
+      <div class="label" style="color: var(--amber-400);">The endgame</div>
+      <h3>The default data layer</h3>
+      <p>Sift becomes the default data layer for any product that needs to know what was purchased, not just where. Like Plaid for bank data or Twilio for SMS, we become unkillable infrastructure that every fintech depends on.</p>
+    </div>
+  </section>
+
+  <!-- 3. The Problem -->
+  <section id="problem">
+    <div class="label">03 &middot; The Problem</div>
+    <h2>$10.5 trillion is invisible</h2>
+    <p class="lead">
+      Consumers and businesses have no visibility into what they actually buy. Banks show them &ldquo;Walmart $152.&rdquo; They can&rsquo;t see that $82 was groceries, $41 was office supplies, and $29 was toys.
+    </p>
+    <h3>For consumers</h3>
+    <p>
+      They know they spent $800 at grocery stores last month, but not that $200 of it was snacks, $150 was alcohol, and $100 was household supplies that should come from a different budget. Every personal finance app on the market shows merchant-level data because that&rsquo;s all bank APIs return.
+    </p>
+    <h3>For businesses</h3>
+    <p>
+      A $14,000 quarterly gas station tab on company cards could be 70% fuel and 30% snacks and energy drinks. No expense tool breaks this down. CFOs are flying blind on what their employees actually buy.
+    </p>
+    <h3>For data buyers</h3>
+    <p>
+      CPG brands, retailers, market research firms, and hedge funds would pay millions for anonymized item-level purchase data across merchants. This data doesn&rsquo;t exist at scale today. Whoever builds it first becomes a category-defining alternative data company.
+    </p>
+  </section>
+
+  <!-- 4. Solution -->
+  <section id="solution">
+    <div class="label">04 &middot; The Solution</div>
+    <h2>Three pillars of infrastructure</h2>
+    <p class="lead">
+      Sift is built on three layers that work together: ingest the data, process it with AI, expose it through APIs and products. Each layer is defensible. Together they&rsquo;re unkillable.
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <div>
+          <h3>Ingest &mdash; Data Sources</h3>
+          <p>The hardest and most defensible part. We aggregate item-level data from every possible source: email receipt parsing, retailer API connections, photo OCR, POS partnerships, bank/card network Level 3 data, and eventually our own card. Every new source increases coverage and makes the API more valuable.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <div>
+          <h3>Process &mdash; AI Intelligence Engine</h3>
+          <p>The AI layer that extracts items from raw data and categorizes them with 94% accuracy across 147 categories. Cross-merchant taxonomy means the same &ldquo;snacks&rdquo; category whether it&rsquo;s from Walmart, Target, or a gas station. User corrections train both per-user AND cross-user models, creating a compounding flywheel.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <div>
+          <h3>Expose &mdash; Developer API</h3>
+          <p>REST API, webhooks, and SDKs that let any developer integrate item-level purchase data in 5 minutes. Pay-per-receipt pricing ($0.02-0.10). This is the layer that turns Sift into actual infrastructure that other fintechs build on top of.</p>
+        </div>
+      </div>
+    </div>
+    <h3>The data sources roadmap</h3>
+    <table>
+      <thead><tr><th>Source</th><th>Coverage</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Email receipt parsing</td><td>60-70%</td><td>Building now</td></tr>
+        <tr><td>Retailer API connections</td><td>75-85%</td><td>Phase 1</td></tr>
+        <tr><td>Receipt photo OCR</td><td>90-95%</td><td>Live</td></tr>
+        <tr><td>POS partnerships</td><td>95-98%</td><td>Phase 2</td></tr>
+        <tr><td>Bank Level 3 data</td><td>95-98%</td><td>Phase 2</td></tr>
+        <tr><td>Sift Card (own card)</td><td class="check">100%</td><td>Phase 3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 5. Revenue Model -->
+  <section id="revenue">
+    <div class="label">05 &middot; Revenue Model</div>
+    <h2>Four revenue streams</h2>
+    <p class="lead">
+      One infrastructure layer feeds four distinct revenue streams. Each stream has different unit economics and serves a different customer type, but they all depend on the same data engine.
+    </p>
+    <div class="two-col">
+      <div class="box">
+        <div class="label">Pillar 1 &middot; API Revenue</div>
+        <h3>Long-term primary</h3>
+        <p>Pay-per-receipt-processed: $0.02-0.10 per receipt. Volume tiers for high-volume customers. Premium tier for real-time webhooks and advanced categorization.</p>
+        <p><strong>Year 3 target: $30M ARR</strong></p>
+      </div>
+      <div class="box">
+        <div class="label">Pillar 2 &middot; Direct Enterprise</div>
+        <h3>Near-term primary</h3>
+        <p>$25-50/seat/month for item-level employee expense intelligence. Direct sales to mid-market companies. Highest margin, fastest sales cycle.</p>
+        <p><strong>Year 3 target: $20M ARR</strong></p>
+      </div>
+      <div class="box">
+        <div class="label">Pillar 3 &middot; Direct Consumer</div>
+        <h3>User base + data</h3>
+        <p>Freemium: free, Plus ($8/mo), Pro ($15/mo). Drives the user base for the data engine. Generates training data for AI categorization.</p>
+        <p><strong>Year 3 target: $5M ARR &middot; 1M users</strong></p>
+      </div>
+      <div class="box">
+        <div class="label">Pillar 4 &middot; Data Licensing</div>
+        <h3>Scale-dependent</h3>
+        <p>Anonymized, aggregated trend data for CPG brands, market research firms, and hedge funds. Activated at 100K+ users.</p>
+        <p><strong>Year 3 target: $5M ARR &middot; 10 deals</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. The Plaid Playbook -->
+  <section id="playbook">
+    <div class="label">06 &middot; The Plaid Playbook</div>
+    <h2>The same model that built a $13B company</h2>
+    <p class="lead">
+      Plaid was founded in 2013 to build bank account access infrastructure. They didn&rsquo;t try to compete with Mint or Venmo. They became the pipe those apps used. By 2018, every major fintech depended on Plaid.
+    </p>
+    <div class="two-col">
+      <div class="box">
+        <div class="label">Plaid &middot; 2013</div>
+        <h3>Bank account data</h3>
+        <p>Built infrastructure for bank account access. Didn&rsquo;t compete with Venmo, Robinhood, or Coinbase &mdash; became the pipe they all run on. Now valued at $13B+ with 8,000+ apps integrated.</p>
+      </div>
+      <div class="box dark">
+        <div class="label" style="color: var(--amber-400);">Sift &middot; 2026</div>
+        <h3>Itemized purchase data</h3>
+        <p>Building infrastructure for item-level purchase data. Won&rsquo;t compete with Mint, Monarch, or Expensify &mdash; will become the pipe they all run on. Target: 100+ integrations, $5-15B valuation.</p>
+      </div>
+    </div>
+    <div class="pullquote">
+      Infrastructure plays beat product plays. Plaid didn&rsquo;t need to win the consumer fintech war &mdash; they collected revenue from every player. Sift will do the same for item-level purchase data.
+    </div>
+  </section>
+
+  <!-- 7. Competition -->
+  <section id="competition">
+    <div class="label">07 &middot; Competition</div>
+    <h2>Nobody is building infrastructure</h2>
+    <p class="lead">
+      Multiple companies have receipt scanning. Multiple companies have personal finance apps. Multiple companies have expense tools. Nobody has the full stack: multi-source ingestion + AI categorization + cross-merchant taxonomy + developer APIs.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>What They Do</th>
+          <th>Item Data?</th>
+          <th>Multi-source?</th>
+          <th>Public API?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Mint / Monarch</td><td>Personal finance app</td><td class="x">No</td><td class="x">Bank only</td><td class="x">No</td></tr>
+        <tr><td>Expensify / Ramp</td><td>Expense management</td><td class="x">No</td><td class="x">Cards only</td><td class="x">No</td></tr>
+        <tr><td>Sensibill</td><td>Receipt data API</td><td>Limited</td><td class="x">Bank only</td><td class="check">Yes</td></tr>
+        <tr><td>Veryfi / Klippa</td><td>Document OCR</td><td>OCR only</td><td class="x">No aggregation</td><td class="check">Yes</td></tr>
+        <tr><td>Plaid</td><td>Bank account API</td><td class="x">No</td><td class="x">Bank only</td><td class="check">Yes</td></tr>
+        <tr style="background: var(--stone-900); color: white;">
+          <td><strong>Sift</strong></td>
+          <td><strong>Item-level data infrastructure</strong></td>
+          <td class="check">Yes</td>
+          <td class="check">All sources</td>
+          <td class="check">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Why nobody else has done it</h3>
+    <p>
+      <strong>Banks won&rsquo;t.</strong> They make money on interchange fees. Showing customers exactly what they buy encourages smarter spending, which reduces bank revenue.
+    </p>
+    <p>
+      <strong>Card networks won&rsquo;t.</strong> Visa and Mastercard are B2B infrastructure for banks and merchants. Building consumer products is outside their DNA.
+    </p>
+    <p>
+      <strong>Expense tools won&rsquo;t.</strong> They&rsquo;re focused on corporate expense management. They don&rsquo;t have the AI engine or consumer products.
+    </p>
+    <p>
+      <strong>POS companies won&rsquo;t.</strong> They serve merchants, not consumers. They have the data but no consumer distribution.
+    </p>
+    <p>
+      <strong>Apple/Google won&rsquo;t.</strong> They only see their own wallet transactions. Single-channel by design. They&rsquo;ll never aggregate across competing wallets and bank cards.
+    </p>
+  </section>
+
+  <!-- 8. GTM -->
+  <section id="gtm">
+    <div class="label">08 &middot; Go-to-Market Strategy</div>
+    <h2>Bootstrap. Build. Become inevitable.</h2>
+    <p class="lead">
+      Each phase generates revenue and provides leverage for the next. We bootstrap with enterprise sales, launch the API with design partners, scale to general availability, then issue the Sift Card.
+    </p>
+    <div class="phases">
+      <div class="phase">
+        <div class="when">Phase 1<br>Months 1-6</div>
+        <div class="content">
+          <h4>Bootstrap Enterprise</h4>
+          <p>Founder-led sales to mid-market companies. Item-level expense intelligence at $25-50/seat/mo. Direct outreach to CFOs. Demo: &ldquo;Your team spent $14K at gas stations &mdash; $4,200 was snacks.&rdquo; Goal: $20-50K MRR with no team.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Phase 2<br>Months 6-12</div>
+        <div class="content">
+          <h4>API Beta</h4>
+          <p>Launch developer API with 5-10 design partners. Neobanks, regional credit unions, tax software, budgeting apps. Generous free tier ($0 for first 10K receipts/month), $0.05 per receipt above. Goal: 10 paying API customers.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Phase 3<br>Months 12-24</div>
+        <div class="content">
+          <h4>API General Availability</h4>
+          <p>Self-serve developer signup. Beautiful documentation. Open-source SDKs in JavaScript, Python, Ruby. Hackathon sponsorships. Technical content marketing. POS partnership conversations begin. Goal: 100+ paying API customers, $1M+ ARR.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">Phase 4<br>Year 2-3</div>
+        <div class="content">
+          <h4>The Sift Card</h4>
+          <p>Issue our own card via Marqeta or Lithic. As the card issuer, we receive Level 3 item data on every transaction. 100% coverage with zero user effort. Becomes the largest data source AND a category-defining consumer product. &ldquo;The card that knows what you bought.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Defensibility -->
+  <section id="moats">
+    <div class="label">09 &middot; Defensibility</div>
+    <h2>Four compounding moats</h2>
+    <p class="lead">
+      Each moat compounds over time. Each one makes the next harder to replicate. Together they create insurmountable switching costs once we&rsquo;re embedded in 50+ fintechs.
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <div>
+          <h3>Multi-source data aggregation</h3>
+          <p>No competitor has built the full ingestion stack across email, retailer APIs, OCR, POS, and card networks. Each new source compounds the moat. Each integration takes months for a competitor to replicate.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <div>
+          <h3>AI training data flywheel</h3>
+          <p>Every receipt processed makes the AI smarter. Every user correction trains both per-user AND cross-user models. The longer we operate, the more accurate we become &mdash; and competitors can&rsquo;t catch up because they don&rsquo;t have the data.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <div>
+          <h3>API integration switching cost</h3>
+          <p>Once 50+ fintechs depend on Sift, switching means rewriting their product. This is Plaid&rsquo;s moat. Stripe&rsquo;s moat. Once we&rsquo;re infrastructure, we&rsquo;re permanent. Customer acquisition cost approaches zero as we become the default.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">04</div>
+        <div>
+          <h3>Aggregated data asset</h3>
+          <p>The anonymized dataset becomes exponentially more valuable with scale. Hedge funds and CPG brands will pay seven figures for this data. This is the moat that makes us a category-defining alternative data company &mdash; and an irresistible acquisition target.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Why Now -->
+  <section id="whynow">
+    <div class="label">10 &middot; Why Now</div>
+    <h2>Five tailwinds converging</h2>
+    <div class="phases">
+      <div class="phase">
+        <div class="when">01</div>
+        <div class="content">
+          <h4>AI accuracy crossed the threshold</h4>
+          <p>94% categorization accuracy was impossible 2 years ago. Modern LLMs make item extraction and classification reliable enough for production use.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">02</div>
+        <div class="content">
+          <h4>Digital receipts are mainstream</h4>
+          <p>80%+ of major retailers now email receipts. Five years ago this was 30%. The data is finally accessible at scale.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">03</div>
+        <div class="content">
+          <h4>API-first fintech is the norm</h4>
+          <p>Every fintech expects to integrate infrastructure rather than build it. Plaid, Stripe, Marqeta proved the model. Sift is the next layer.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">04</div>
+        <div class="content">
+          <h4>Consumer data rights expanding</h4>
+          <p>CFPB Section 1033 protects consumer ownership of financial data. Regulatory momentum is on the side of data portability and aggregators.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="when">05</div>
+        <div class="content">
+          <h4>Alternative data market exploding</h4>
+          <p>$7.3B and growing 40% CAGR. Hedge funds and CPG brands are desperate for item-level purchase data. Nobody has it at scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Financials -->
+  <section id="financials">
+    <div class="label">11 &middot; Financial Projections</div>
+    <h2>Path to $60M ARR</h2>
+    <p class="lead">
+      Three-year revenue trajectory from $250K in Year 1 to $60M ARR in Year 3, with the API revenue stream becoming the largest piece by Year 3.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th class="num">API</th>
+          <th class="num">Enterprise</th>
+          <th class="num">Consumer</th>
+          <th class="num">Data</th>
+          <th class="num">Total ARR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Year 1</td><td class="num">&mdash;</td><td class="num">$200K</td><td class="num">$50K</td><td class="num">&mdash;</td><td class="num"><strong>$250K</strong></td></tr>
+        <tr><td>Year 2</td><td class="num">$2M</td><td class="num">$5M</td><td class="num">$1M</td><td class="num">$1M</td><td class="num"><strong>$9M</strong></td></tr>
+        <tr><td>Year 3</td><td class="num">$30M</td><td class="num">$20M</td><td class="num">$5M</td><td class="num">$5M</td><td class="num"><strong>$60M</strong></td></tr>
+      </tbody>
+    </table>
+    <h3>Unit economics</h3>
+    <div class="stats">
+      <div class="stat"><div class="num">85%+</div><div class="desc">gross margin</div></div>
+      <div class="stat"><div class="num">9.6x</div><div class="desc">consumer LTV/CAC</div></div>
+      <div class="stat"><div class="num">21.6x</div><div class="desc">enterprise LTV/CAC</div></div>
+      <div class="stat"><div class="num">38.4x</div><div class="desc">card product LTV/CAC</div></div>
+    </div>
+  </section>
+
+  <!-- 12. Funding -->
+  <section id="funding">
+    <div class="label">12 &middot; Funding Strategy</div>
+    <h2>Bootstrap to billion</h2>
+    <p class="lead">
+      We don&rsquo;t need to raise immediately. The MVP is built. The first phase is bootstrap-able through enterprise sales. Funding accelerates the API build and partnership development.
+    </p>
+    <div class="funding">
+      <div class="tier">
+        <div class="label-tier">Pre-seed</div>
+        <div class="amount">$250K-500K</div>
+        <p>Months 1-6. Founder + 1 engineer. Validate market, hit $50K MRR, build API beta.</p>
+      </div>
+      <div class="tier featured">
+        <div class="label-tier">Seed Round</div>
+        <div class="amount">$1.5M-3M</div>
+        <p>Months 6-12. CTO + 3 engineers + partnerships lead + AE. POS deals begin. $1M ARR target.</p>
+      </div>
+      <div class="tier">
+        <div class="label-tier">Series A</div>
+        <div class="amount">$10M-20M</div>
+        <p>Months 18-24. Full team, multiple partnerships, card program development. $10M+ ARR.</p>
+      </div>
+    </div>
+    <h3>Use of seed funds</h3>
+    <table>
+      <tbody>
+        <tr><td>Engineering team (CTO + 3 engineers)</td><td class="num">50%</td></tr>
+        <tr><td>Partnerships lead + enterprise AE</td><td class="num">25%</td></tr>
+        <tr><td>Infrastructure, AI costs, SOC 2</td><td class="num">15%</td></tr>
+        <tr><td>Legal, marketing, ops</td><td class="num">10%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 13. Team -->
+  <section id="team">
+    <div class="label">13 &middot; Team</div>
+    <h2>Founder-led, AI-augmented</h2>
+    <h3>Current</h3>
+    <p>
+      Sales leadership background. Managed 50-rep org generating $3.4M annual revenue. Built MVP solo using AI tooling. Strong instincts for B2B sales and go-to-market. Already running multiple businesses successfully.
+    </p>
+    <h3>Key hires (Seed)</h3>
+    <ul class="checklist">
+      <li><strong>CTO / Technical Co-founder</strong> &mdash; AI/ML and data engineering background. Owns the API infrastructure, ML models, and partnership integrations.</li>
+      <li><strong>Head of Partnerships</strong> &mdash; POS, bank, and retailer relationships. Closes the deals that unlock the data sources.</li>
+      <li><strong>Senior Backend Engineer</strong> &mdash; API infrastructure, data pipelines, scaling.</li>
+      <li><strong>Enterprise Sales Lead</strong> &mdash; Mid-market expense intelligence sales. Closes $25-50K MRR deals.</li>
+    </ul>
+  </section>
+
+  <!-- 14. Risks -->
+  <section id="risks">
+    <div class="label">14 &middot; Risks &amp; Mitigations</div>
+    <h2>What could go wrong</h2>
+    <div class="risks">
+      <div class="risk">
+        <h4>Big tech (Plaid, Stripe) builds competing product</h4>
+        <p>First mover advantage. Focus on AI categorization moat. Become acquisition target before they catch up.</p>
+      </div>
+      <div class="risk">
+        <h4>POS companies won&rsquo;t partner</h4>
+        <p>Software layer alone covers 85-90%. Direct enterprise revenue funds growth without partnerships. Multiple POS targets to pursue.</p>
+      </div>
+      <div class="risk">
+        <h4>API adoption slow</h4>
+        <p>Start with design partners. Generous free tier. Strong developer experience. Direct enterprise revenue carries the company while API matures.</p>
+      </div>
+      <div class="risk">
+        <h4>Card program regulatory complexity</h4>
+        <p>Use BaaS providers (Marqeta/Lithic) who handle compliance. Hire fintech counsel. Card is Year 2-3, not immediate.</p>
+      </div>
+      <div class="risk">
+        <h4>Consumer apps don&rsquo;t see API value</h4>
+        <p>Item-level data is universally desired. Every fintech has wanted this for years. Enterprise revenue proves the value before API GA.</p>
+      </div>
+      <div class="risk">
+        <h4>Privacy/data concerns</h4>
+        <p>Privacy-first positioning. SOC 2 compliance. Users own their data. Opt-in only for anonymized aggregation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. Exits -->
+  <section id="exits">
+    <div class="label">15 &middot; Exit Scenarios</div>
+    <h2>Multiple paths to a billion</h2>
+    <table>
+      <thead><tr><th>Exit Path</th><th>Timeline</th><th>Valuation Range</th></tr></thead>
+      <tbody>
+        <tr><td>Acquisition by Plaid / Stripe</td><td>Year 3-5</td><td class="num">$1-5B</td></tr>
+        <tr><td>Acquisition by major bank</td><td>Year 4-6</td><td class="num">$2-8B</td></tr>
+        <tr><td>Acquisition by data company (Bloomberg, S&amp;P)</td><td>Year 4-6</td><td class="num">$3-10B</td></tr>
+        <tr><td>IPO</td><td>Year 6-8</td><td class="num">$5-15B</td></tr>
+        <tr><td>Profitable private infrastructure company</td><td>Ongoing</td><td class="num">$100M+ ARR</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The most likely acquirers are companies that need item-level purchase data at scale: a payments company wanting consumer data (Stripe, Square), a card issuer wanting differentiation (Capital One, Chase), or a data company wanting alternative data (Bloomberg, S&amp;P, Nielsen). All have made acquisitions in this range.
+    </p>
+  </section>
+
+  <!-- 16. Milestones -->
+  <section id="milestones">
+    <div class="label">16 &middot; Milestones</div>
+    <h2>Where we are. Where we&rsquo;re going.</h2>
+    <ul class="checklist">
+      <li class="done">MVP built and deployed (sift-iota.vercel.app)</li>
+      <li class="done">AI receipt parsing working (94% accuracy)</li>
+      <li class="done">Stripe billing integrated (Free / Plus / Pro tiers)</li>
+      <li class="done">AI chat assistant live (Gemini-powered)</li>
+      <li class="done">Gmail OAuth integration built</li>
+      <li>First 10 consumer users</li>
+      <li>First enterprise pilot ($3-5K/month)</li>
+      <li>Public API beta with design partners</li>
+      <li>Developer documentation site live</li>
+      <li>Pre-seed funding closed</li>
+      <li>First 50 enterprise customers</li>
+      <li>10 paying API customers</li>
+      <li>Seed round closed</li>
+      <li>First POS partnership signed</li>
+      <li>Series A closed</li>
+      <li>Sift Card launched</li>
+      <li>100K cardholders</li>
+    </ul>
+  </section>
+
+  <div class="cta">
+    <h2>Sift is live today.</h2>
+    <p>Working product. Real AI. Stripe billing. The infrastructure layer is being built right now.</p>
+    <div class="url">sift-iota.vercel.app</div>
+    <div class="url-desc">Live product</div>
+  </div>
+
+</div>
+
+</body>
+</html>
