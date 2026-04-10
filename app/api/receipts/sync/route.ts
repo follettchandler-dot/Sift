@@ -10,7 +10,8 @@ import {
 import { parseReceiptText } from "@/lib/ai/parse-receipt";
 import { categorizeItems } from "@/lib/ai/categorize";
 
-const MAX_EMAILS_PER_SYNC = 20;
+const MAX_EMAILS_PER_SYNC = 100;
+const INITIAL_SYNC_DAYS = 180; // 6 months on first sync
 
 export async function POST() {
   const supabase = await createClient();
@@ -74,11 +75,11 @@ export async function POST() {
     }
   }
 
-  // Determine search window: since last sync or last 30 days
+  // Determine search window: since last sync or last 180 days (first sync)
   const lastSyncedAt: string | null = account.metadata?.last_synced_at ?? null;
   const afterDate = lastSyncedAt
     ? new Date(lastSyncedAt)
-    : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    : new Date(Date.now() - INITIAL_SYNC_DAYS * 24 * 60 * 60 * 1000);
 
   const gmailClient = getGmailClient(accessToken);
 
@@ -117,6 +118,8 @@ export async function POST() {
 
   let created = 0;
   let skipped = 0;
+  let parseFailed = 0;
+  let insufficientData = 0;
   const toProcess = messages.slice(0, MAX_EMAILS_PER_SYNC);
 
   for (const msg of toProcess) {
@@ -159,10 +162,14 @@ export async function POST() {
       parsed = await parseReceiptText(rawText);
     } catch (err) {
       console.error(`[receipts/sync] Parse failed for ${msg.id}:`, err);
+      parseFailed++;
       continue;
     }
 
-    if (!parsed.merchant_name || !parsed.total_amount) continue;
+    if (!parsed.merchant_name || !parsed.total_amount || parsed.total_amount <= 0) {
+      insufficientData++;
+      continue;
+    }
 
     // AI categorize
     let categorized: Awaited<ReturnType<typeof categorizeItems>> = [];
@@ -247,5 +254,12 @@ export async function POST() {
     })
     .eq("id", account.id);
 
-  return NextResponse.json({ created, skipped, total: toProcess.length });
+  return NextResponse.json({
+    created,
+    skipped,
+    parseFailed,
+    insufficientData,
+    total: toProcess.length,
+    totalFound: messages.length,
+  });
 }

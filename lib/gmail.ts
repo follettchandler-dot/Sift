@@ -41,21 +41,26 @@ export function getGmailClient(accessToken: string) {
 
 export async function searchReceiptEmails(
   gmailClient: ReturnType<typeof getGmailClient>,
-  afterDate?: Date
+  afterDate?: Date,
+  maxResults = 200
 ) {
   const dateFilter = afterDate
     ? ` after:${Math.floor(afterDate.getTime() / 1000)}`
     : "";
 
+  // Cast a wide net — use subject-based search that works across retailers
+  // without needing to hardcode every merchant name. Also exclude common noise.
   const query =
-    `from:(walmart OR target OR amazon OR costco OR "home depot" OR starbucks OR doordash OR uber OR walgreens OR cvs OR kroger OR "whole foods" OR bestbuy OR lowes OR instacart OR grubhub OR chipotle OR mcdonalds OR chick-fil-a OR dominos OR publix OR aldi OR safeway OR wegmans OR lyft OR airbnb OR netflix OR spotify OR apple OR google OR microsoft OR paypal OR venmo OR etsy OR ebay OR shopify OR "dollar general" OR "trader joes")` +
-    ` subject:(receipt OR order OR confirmation OR purchase OR invoice OR "order confirmation" OR "your order" OR "you bought" OR "payment confirmation")` +
+    `(subject:(receipt OR "your order" OR "order confirmation" OR "order #" OR "order number" OR invoice OR "payment received" OR "thanks for your order" OR "thanks for your purchase" OR "thank you for your order" OR "thank you for your purchase" OR "purchase confirmation" OR "your receipt" OR "e-receipt" OR "digital receipt" OR "order placed" OR "order shipped" OR "we received your order"))` +
+    ` -subject:(cancelled OR canceled OR refund OR refunded OR returned OR "return confirmation" OR "password" OR "verify" OR "welcome" OR "sign up" OR "newsletter" OR "unsubscribe" OR "account" OR shipping OR delivered OR estimate OR quote)` +
+    ` -from:(noreply-newsletter OR newsletter OR marketing OR support)` +
+    ` -"promo code" -"coupon"` +
     dateFilter;
 
   const response = await gmailClient.users.messages.list({
     userId: "me",
     q: query,
-    maxResults: 50,
+    maxResults,
   });
 
   return response.data.messages || [];
