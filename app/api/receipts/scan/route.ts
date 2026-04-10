@@ -1,18 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedUser, getAuthenticatedSupabase } from "@/lib/supabase/auth";
 import { extractTextFromImage } from "@/lib/ocr";
 import { parseReceiptText } from "@/lib/ai/parse-receipt";
 import { categorizeItems } from "@/lib/ai/categorize";
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getAuthenticatedUser(req);
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const supabase = await getAuthenticatedSupabase(req);
 
   const formData = await req.formData();
   const file = formData.get("receipt") as File | null;

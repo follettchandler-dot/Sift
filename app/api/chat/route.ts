@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { getAuthenticatedUser, getAuthenticatedSupabase } from "@/lib/supabase/auth"
 import { streamText, type UIMessage } from "ai"
 import { google } from "@ai-sdk/google"
 import { startOfMonth, startOfWeek } from "date-fns"
@@ -17,14 +17,11 @@ function toModelMessages(uiMessages: UIMessage[]) {
 }
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
+  const user = await getAuthenticatedUser(req)
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
+  const supabase = await getAuthenticatedSupabase(req)
 
   const body = await req.json()
   const rawMessages = body.messages ?? body.uiMessages ?? []
